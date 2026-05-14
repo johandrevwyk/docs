@@ -53,4 +53,22 @@ The setup script will open these on the dashboard server:
 - **443**, HTTPS (the dashboard).
 - **3000**, internal, only used between nginx and Node. Do **not** open to public.
 
+## Cheap hosts that work
+
+You do not need a beefy server. Anything with 1-2 GB RAM and a public IP is enough. Pick a region close to your FiveM game server so the MySQL connection stays fast.
+
+| Host | Plan | Approx price | Notes |
+|------|------|--------------|-------|
+| **Oracle Cloud Free Tier** | Always Free (ARM A1, 4 vCPU / 24 GB) | **$0/mo** | Best deal if available in your region. Strict sign-up, but free forever. |
+| **Hetzner Cloud** | CX22 (2 vCPU / 4 GB / 40 GB) | ~$4.50/mo | Best value paid host. EU + US regions. |
+| **RackNerd** | 1 GB KVM | ~$11-15/**year** | Black Friday and yearly deals are absurd. US-only. |
+| **Vultr** | Cloud Compute Regular (1 GB) | $6/mo | Many regions including Joburg, Sydney, Sao Paulo. |
+| **Linode / Akamai** | Nanode 1 GB | $5/mo | Solid uptime, simple UI. |
+| **Contabo** | VPS S (4 vCPU / 8 GB / 50 GB) | €5/mo | Cheapest big box. Sometimes oversold during peak hours. |
+| **OVH** | VPS Starter | ~€3.50/mo | EU + Canada. DDoS protection included. |
+
+**Skip these:** anything with less than 1 GB RAM, anything advertised as "shared hosting" or "cPanel hosting" (you need root SSH), free tiers that auto-expire after a trial.
+
+**Tip:** if you already have a Linux VPS for your FiveM game server with spare RAM, just install the dashboard on the same machine. Saves money and removes network latency to the DB.
+
 That's it. Next: [Auto install](auto-install).
