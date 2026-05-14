@@ -4,7 +4,7 @@ title: "Player Profile"
 
 Route: `/players/:license`
 Sidebar group: Players
-Permission: `players.view` (edit needs `players.edit`)
+Permission: `players.view`
 
 ## What it does
 
@@ -23,12 +23,10 @@ Everything about one player. Their characters, money, inventory, vehicles, prope
 
 ## Common actions
 
-- **Edit money**, adjust cash / bank / crypto. Requires `money.edit`. Reason is logged to audit.
-- **Edit inventory**, add/remove items, change quantities. Requires `inventories.edit`.
-- **Ban / unban**, opens the ban dialog. Requires `bans.create`.
-- **Add note**, internal admin note attached to this player.
+- **Ban / unban**, opens the ban dialog. Requires `bans.create` / `bans.delete`.
+- **Watch stream / record**, jumps to the [Online Players](online-players) flow when the player is connected.
 
-Every edit appears on the [Audit Logs](audit-logs) page.
+Money / inventory mutations are not implemented in the dashboard; the profile is read-only beyond bans. Every admin action lands on the [Audit Logs](audit-logs) page.
 
 ## Notes
 

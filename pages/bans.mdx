@@ -24,8 +24,9 @@ All bans in one place. Permanent and temporary. See who issued each ban, why, an
 ## Common actions
 
 - **Create ban**, search a player → set reason + duration → ban. Requires `bans.create`.
-- **Edit ban**, change reason or expiry. Requires `bans.edit`.
 - **Lift ban**, marks ban inactive immediately. Requires `bans.delete`.
+
+Editing an existing ban's reason or expiry is not implemented; lift the old ban and create a new one if you need to change either.
 
 All actions are logged to [Audit Logs](audit-logs).
 

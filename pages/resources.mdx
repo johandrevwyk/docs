@@ -4,25 +4,23 @@ title: "Resources"
 
 Route: `/resources`
 Sidebar group: System
-Permission: `resources.view` (manage needs `resources.manage`)
+Permission: `resources.view`
 
 ## What it does
 
-The FiveM resource manager you wished `txAdmin` had. List, start, stop, restart any resource on your game server straight from the dashboard.
+Read-only list of every resource the game server has loaded. Use it to confirm a resource is started, spot one that errored, or check the resource set after a deploy.
 
 ## What you see
 
-- **Resource row** with name, status (started / stopped / loading), version (from `fxmanifest.lua`).
-- **Filters**, status, search by name.
+- **Resource row** with name and state (started / stopped / starting / stopping / missing / error).
+- **Counts**, total / running / errored at a glance.
+- **Grouping**, errored first, then user resources, then system resources.
+- **Search**, by name.
 
 ## Common actions
 
-- **Start**, runs `ensure <name>`. Requires `resources.manage`.
-- **Stop**, runs `stop <name>`. Requires `resources.manage`.
-- **Restart**, `stop` + `start`. Requires `resources.manage`.
-
-All actions go through the Lua resource and are logged to [Audit Logs](audit-logs).
+This page is read-only. Starting and stopping resources from the dashboard is not implemented; use the FiveM server console (`ensure <name>` / `stop <name>` / `restart <name>`) for that.
 
 ## Notes
 
-You **cannot** stop `nexora-dashboard` from here, that would cut off the dashboard's own connection. Use the game server console if you really need to.
+Resource state is pushed by the `nexora-dashboard` Lua heartbeat, so the list reflects the actual game server. If everything is blank, the Lua resource is not connected; see [Lua install](../lua-resource/install).

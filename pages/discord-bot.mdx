@@ -8,21 +8,34 @@ Permission: `discord.view` (manage needs `discord.manage`)
 
 ## What it does
 
-Status and configuration for the dashboard's Discord bot, used for role sync, announcements, and Discord OAuth login.
+The Discord bot is **a whitelist sync helper**, nothing else. It polls the configured Discord guild on a schedule, finds every member who holds one of the selected roles, and writes them to `dash_whitelist`. There is no Discord-role → dashboard-permission mapping; admin access is granted in [Users](users) / [Roles](roles), not Discord.
+
+Optional extras the same connection enables:
+
+- **Presence cycling**, rotate the bot's "Playing/Watching" status through templated strings (player count, server name, kills, bans, ...).
+- **Identity sync**, push the dashboard branding name and logo to the bot's Discord profile (Discord rate-limits username changes hard, 2 per hour, so this is a manual action).
 
 ## What you see
 
-- **Bot status**, online / offline, latency, uptime.
-- **Guilds**, every Discord server the bot is in.
-- **Role sync**, which Discord roles map to which dashboard roles.
-- **Capabilities**, features the bot can use (slash commands, role management, etc.).
+- **Bot status**, gateway state, REST availability, sync errors.
+- **Guild summary**, which guild the bot is in and its member count.
+- **Roles**, the role list pulled from the guild. Tick the ones whose members get whitelisted.
+- **Synced entries**, the most recent whitelist rows the bot added.
 
 ## Common actions
 
-- **Refresh status**, pings the bot now.
-- **Sync roles**, pulls current Discord roles for all admins. Requires `discord.manage`.
-- **Edit role mapping**, link a Discord role to a dashboard [Role](roles). Requires `discord.manage`.
+- **Sync Now**, runs the role pull immediately instead of waiting for the next scheduled tick.
+- **Save**, writes the token, guild ID, selected roles, interval, and remove-unmatched flag.
+- **Sync Identity**, copies the brand name + logo onto the bot's Discord profile (uses the rate-limited endpoint).
+
+## Setup
+
+1. Create an application at [discord.com/developers/applications](https://discord.com/developers/applications), add a Bot, copy the token.
+2. Enable **Server Members Intent** under the Bot tab.
+3. Invite the bot to your guild with the `bot` scope and a role granting "View Members".
+4. Paste token + guild ID on this page, pick whitelist roles, save.
 
 ## Notes
 
-The bot is optional. Skip this page entirely if you don't use Discord OAuth. To enable, set `DISCORD_*` vars in [.env](../getting-started/env-vars) and restart the service.
+- Setting `Remove whitelist entries when role removed` makes the sync authoritative. Members losing the role get pulled out of `dash_whitelist` on the next tick. Leave off if you want Discord to add but never revoke.
+- The bot does **not** grant or revoke dashboard logins, ban anyone, or read chat messages. Permissions are still managed entirely from [Roles](roles).

@@ -8,18 +8,25 @@ Permission: `phone.view`
 
 ## What it does
 
-Status of the in-game phone system (`lb-phone`). Diagnostics, not message-snooping.
+Read-only inspection of an in-game phone resource. Two providers are supported and selectable in [Settings → Framework](settings): **lb-phone** and **yseries**. Pick `None` to disable the page entirely.
+
+Detection is SQL-only. The dashboard probes the provider's tables (e.g. `phone_phones` for lb-phone, `yphone_devices` for yseries). The phone resource does not need to be "running" or expose any export; if the tables exist, the page works.
 
 ## What you see
 
-- **Health check**, is `lb-phone` running, version, last heartbeat.
-- **Capabilities**, which phone features the dashboard can query.
-- **System status**, pending issues, error counts.
+- **Phones list**, every device on the server with owner, status, and provider-specific identifiers.
+- **Per-phone detail**, SMS conversations, call log, mail, and social-app messages where the provider supports them.
+- **Capabilities row**, which features the active provider exposes (lb-phone and yseries differ).
+- **Health check**, which provider is selected and which of its tables were detected.
 
 ## Common actions
 
-This page is read-only. Use it to confirm the phone resource is healthy.
+This page is read-only. Use **Check again** on the empty state to re-probe after installing or switching providers.
+
+## Switching providers
+
+Change `Phone Script` under [Settings → Framework](settings) and save. The cache refreshes within a minute, or click **Check again** to force it. Selecting a provider whose tables don't exist shows a hint instead of a 500.
 
 ## Notes
 
-The dashboard does **not** read private phone messages. The phone is the player's IC private space, only metadata and system health appear here, by design.
+The dashboard does **not** decrypt private phone messages beyond what is already in plaintext in the provider's schema. The phone is the player's IC private space; only metadata and what the provider stores in clear appear here.

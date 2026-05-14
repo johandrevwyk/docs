@@ -17,6 +17,7 @@ Dashboard-wide configuration. Tune polling intervals, alert thresholds, retentio
 - **Retention**, how long to keep audit logs, events, position history, kill log.
 - **Economy alert thresholds**, amounts that trigger info / warn / critical alerts.
 - **Resource health**, which game-side resources the dashboard depends on (e.g. `ox_inventory`, `jg-advancedgarages`).
+- **Entity Count** toggle under *Capture Settings*, switches the every-10s `GetAllVehicles` / `GetAllPeds` / `GetAllObjects` push on or off. Turn it off on busy servers where you don't care about the Entities page; the Lua resource then skips those scans entirely.
 
 ## Common actions
 
