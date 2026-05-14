@@ -9,9 +9,9 @@ description: "Use the server-side export from your job resource. If the quest ha
 
 Use the server-side export from your job resource. If the quest has a `job` field, the server automatically validates the player's current job before crediting progress - you do not need to check it yourself.
 
-{% hint style="warning" %}
+<Warning>
 Track progress is forced to 1 increment to combat LUA injectors/executors. More settings available in configs.
-{% endhint %}
+</Warning>
 
 ```lua
 -- In your police resource's server.lua, when an arrest is made:

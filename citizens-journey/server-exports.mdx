@@ -69,6 +69,6 @@ exports['hb_citizensjourney']:resetQuest(citizenid, 'w3')
 exports['hb_citizensjourney']:resetQuestType(citizenid, 'daily')
 ```
 
-{% hint style="info" %}
+<Note>
 When \`trackProgress\` is called for a quest that has a \`job\` field, the server checks \`Player.PlayerData.job.name\` against the quest's job requirement. If the player is not on that job the call returns \`false\` and no progress is written.
-{% endhint %}
+</Note>
