@@ -29,6 +29,10 @@ Offline-and-online player database. Every account that ever joined your server, 
   - Online players go through the framework's `AddMoney` / `RemoveMoney`, so the player sees the standard chat / phone-app feedback and the framework keeps SQL in sync.
   - Offline characters get a direct SQL write against the `players` JSON `money` column (qbcore / qbox) or the `users.accounts` blob (ESX, both array and object schema variants). On ESX, `crypto` is rejected because vanilla ESX has no crypto account.
   - Every adjustment is recorded in [Audit Logs](audit-logs).
+- **Give / take items** (the `+ Item` button), searchable dropdown of every item registered by the active inventory script (ox / qb / framework default), quantity (negative removes), optional reason. Requires `players.inventory.edit`.
+  - Catalog comes from the `/api/items/sync` push the Lua resource runs at startup; unknown item names are rejected before the SQL write.
+  - Online players go through the active inventory script's `AddItem` / `RemoveItem` export (or `xPlayer.addInventoryItem` for ESX default), so the existing inventory UI reflects the change immediately.
+  - Offline characters get a direct write into the `players.inventory` JSON (qbcore / qbox, ox- or qb-shape depending on `inventory_script`) or `users.inventory` (ESX, ox-array or simple `{name:count}` object). Removals decrement the matching slot and drop it when it hits zero.
 
 ## Notes
 
