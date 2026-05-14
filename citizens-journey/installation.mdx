@@ -1,28 +1,26 @@
 ---
 title: "Installation"
-description: "All dependencies must be started before hbcitizensjourney in server.cfg."
+description: "Drop hb_citizensjourney into resources, import the SQL schema, ensure dependencies, configure season + quests, restart."
 ---
 
-## Installation
+## Requirements
 
-### Requirements
+- `ox_lib`
+- `oxmysql`
+- `qbx_core` **or** `qb-core`
+- `ox_inventory`
 
-* ox\_lib
-* oxmysql
-* qbx\_core **or** qb-core
-*   ox\_inventory<br />
-
-    <Note>
-All dependencies must be started <strong>before</strong> <code>hb_citizensjourney</code> in <code>server.cfg</code>.
+<Note>
+All dependencies must be started **before** `hb_citizensjourney` in `server.cfg`.
 </Note>
 
-    <Note>
-The resource should be started before any script contain exports for quests
+<Note>
+The resource should be started before any script that contains exports for quests.
 </Note>
 
-### Steps
+## Steps
 
-**1.** Drop `hb_citizensjourney` into your resources folder.
+**1.** Drop `hb_citizensjourney` into your `resources/` folder (subfolder doesn't matter).
 
 **2.** Import the database schema:
 
@@ -44,7 +42,7 @@ ensure hb_citizensjourney
 
 **5.** Start or restart the resource.
 
-### Database Tables
+## Database Tables
 
 | Table                | Purpose                                                                      |
 | -------------------- | ---------------------------------------------------------------------------- |
@@ -52,8 +50,8 @@ ensure hb_citizensjourney
 | `cj_claimed_rewards` | Which tier rewards have been claimed (free / premium lane)                   |
 | `cj_quest_progress`  | Quest progress and claimed state, period-aware                               |
 
-`period_key` format: `YYYY-MM-DD` (daily) · `YYYYWnn` (weekly) · `season_N` (seasonal)<br />
+`period_key` format: `YYYY-MM-DD` (daily) · `YYYYWnn` (weekly) · `season_N` (seasonal)
 
 <Note>
-It's highly encouraged to add your own quests and not depend on the predefined ones
+It is highly encouraged to add your own quests instead of depending on the predefined ones.
 </Note>
