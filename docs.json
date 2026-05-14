@@ -114,16 +114,6 @@
             ]
           }
         ]
-      },
-      {
-        "tab": "Marketing",
-        "groups": [
-          {
-            "group": "Listings",
-            "icon": "tag",
-            "pages": ["tebex", "cfx-forums"]
-          }
-        ]
       }
     ]
   },
