@@ -1,6 +1,6 @@
 ---
 title: "Installation"
-description: "<div data-gb-custom-block data-tag=\"hint\" data-style=\"info\" class=\"hint hint-info\"><p>All dependencies must be started <strong>before</strong> <code>hbcitizensj"
+description: "All dependencies must be started before hbcitizensjourney in server.cfg."
 ---
 
 ## Installation
@@ -10,11 +10,15 @@ description: "<div data-gb-custom-block data-tag=\"hint\" data-style=\"info\" cl
 * ox\_lib
 * oxmysql
 * qbx\_core **or** qb-core
-*   ox\_inventory<br>
+*   ox\_inventory<br />
 
-    <div data-gb-custom-block data-tag="hint" data-style="info" class="hint hint-info"><p>All dependencies must be started <strong>before</strong> <code>hb_citizensjourney</code> in <code>server.cfg</code>.</p></div>
+    <Note>
+All dependencies must be started <strong>before</strong> <code>hb_citizensjourney</code> in <code>server.cfg</code>.
+</Note>
 
-    <div data-gb-custom-block data-tag="hint" data-style="info" class="hint hint-info"><p>The resource should be started before any script contain exports for quests</p></div>
+    <Note>
+The resource should be started before any script contain exports for quests
+</Note>
 
 ### Steps
 
@@ -48,7 +52,7 @@ ensure hb_citizensjourney
 | `cj_claimed_rewards` | Which tier rewards have been claimed (free / premium lane)                   |
 | `cj_quest_progress`  | Quest progress and claimed state, period-aware                               |
 
-`period_key` format: `YYYY-MM-DD` (daily) · `YYYYWnn` (weekly) · `season_N` (seasonal)<br>
+`period_key` format: `YYYY-MM-DD` (daily) · `YYYYWnn` (weekly) · `season_N` (seasonal)<br />
 
 <Note>
 It's highly encouraged to add your own quests and not depend on the predefined ones
