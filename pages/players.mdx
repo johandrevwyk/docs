@@ -25,6 +25,10 @@ Offline-and-online player database. Every account that ever joined your server, 
 
 - **Click row** → opens full [Player Profile](player-profile).
 - **Sort** by money, last seen, first seen.
+- **Adjust money** (the `$` button), pick character, type (cash / bank / crypto / dirty), positive or negative amount, and optional reason. Requires `players.money.edit`.
+  - Online players go through the framework's `AddMoney` / `RemoveMoney`, so the player sees the standard chat / phone-app feedback and the framework keeps SQL in sync.
+  - Offline characters get a direct SQL write against the `players` JSON `money` column (qbcore / qbox) or the `users.accounts` blob (ESX, both array and object schema variants). On ESX, `crypto` is rejected because vanilla ESX has no crypto account.
+  - Every adjustment is recorded in [Audit Logs](audit-logs).
 
 ## Notes
 
