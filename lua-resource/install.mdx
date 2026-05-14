@@ -10,34 +10,29 @@ The dashboard talks to your game server through a small Lua resource called `nex
 - The `nexora-dashboard` folder (ships inside the release ZIP, located at `/home/fivem/nexora-dashboard/` after you extract).
 - Your `FIVEM_API_KEY` (printed at the end of the install script, also in `/home/fivem/.env`).
 - Your dashboard URL (e.g. `https://dash.yourdomain.com`).
-- Access to your FiveM server's `resources/` folder.
+- Access to your FiveM server's `resources/` folder and `server.cfg`.
 
 ## Step 1: Copy the folder
 
-Drop the `nexora-dashboard` folder into your server's resources directory. Path depends on your host:
-
-| Setup | Path |
-|-------|------|
-| txAdmin (QBox/QBCore) | `txData/<deployment>/resources/[standalone]/nexora-dashboard` |
-| Pterodactyl (most game panels) | `/server-data/resources/nexora-dashboard` |
-| Custom | wherever your other resources live |
+Drop the `nexora-dashboard` folder anywhere inside your server's `resources/` directory. Subfolder doesn't matter (`[standalone]/`, `[hb]/`, root, anywhere), FiveM finds it automatically.
 
 Keep the folder name **exactly** `nexora-dashboard`, `fxmanifest.lua` references it.
 
-## Step 2: Edit `config.lua`
+## Step 2: Add convars to `server.cfg`
 
-Open `nexora-dashboard/config.lua` and set:
+The resource is configured entirely via FiveM convars. Add these lines to your `server.cfg` **before** the `ensure nexora-dashboard` line:
 
-```lua
-Config.DashboardURL = 'https://dash.yourdomain.com'  -- no trailing slash
-Config.ApiKey       = 'paste your FIVEM_API_KEY here'
+```
+set DASHBOARD_URL "https://dash.yourdomain.com"
+set DASHBOARD_API_KEY "paste your FIVEM_API_KEY here"
 ```
 
-Save the file.
+- `DASHBOARD_URL`: your dashboard URL, no trailing slash.
+- `DASHBOARD_API_KEY`: the `FIVEM_API_KEY` printed by the install script (also in `/home/fivem/.env`). Must match exactly.
 
-## Step 3: Add to `server.cfg`
+## Step 3: Ensure the resource
 
-Add this line near your other `ensure` lines:
+Add this line in `server.cfg` near your other `ensure` lines:
 
 ```
 ensure nexora-dashboard
@@ -61,6 +56,8 @@ Or restart the whole server. You should see lines like:
 [nexora-dashboard] connected to dashboard
 ```
 
+If you see `ERROR: DASHBOARD_URL or DASHBOARD_API_KEY convar not set in server.cfg!`, double-check Step 2.
+
 ## Step 5: Verify in the dashboard
 
 Open the dashboard → **Online Players** page. Within 5 seconds you should see your online players.
@@ -68,20 +65,9 @@ Open the dashboard → **Online Players** page. Within 5 seconds you should see 
 If the page is empty:
 
 - Check the FiveM console for `[nexora-dashboard]` errors.
-- Make sure `Config.ApiKey` exactly matches `FIVEM_API_KEY` in `/home/fivem/.env`.
-- Make sure your dashboard URL is reachable from the FiveM server (not blocked by firewall).
-
-## Optional: server.cfg convars
-
-If your installer printed convars like this, paste them into `server.cfg` instead of editing `config.lua`:
-
-```
-set DASHBOARD_URL "https://dash.yourdomain.com"
-set DASHBOARD_API_KEY "your-api-key-here"
-```
-
-The resource reads convars first, then falls back to `config.lua`.
+- Make sure `DASHBOARD_API_KEY` convar exactly matches `FIVEM_API_KEY` in `/home/fivem/.env`.
+- Make sure `DASHBOARD_URL` is reachable from the FiveM server (not blocked by firewall). Test with `curl https://yourdomain.com/api/health`.
 
 ## Updating the resource later
 
-When a new version of the dashboard ships, download the new release ZIP from your Tebex purchase page, extract it, and copy the fresh `nexora-dashboard/` folder over the old one on your game server. Then `restart nexora-dashboard` in the FiveM console.
+When a new version of the dashboard ships, download the new release ZIP from your Tebex purchase page, extract it, and copy the fresh `nexora-dashboard/` folder over the old one on your game server. Your convars in `server.cfg` stay in place. Then `restart nexora-dashboard` in the FiveM console.

@@ -11,7 +11,7 @@ Every setting lives in `/home/fivem/.env`. The install script writes this for yo
 |----------|--------------|---------|
 | `PORT` | Port the Node server listens on. nginx proxies to this. | `3000` |
 | `JWT_SECRET` | Secret used to sign login tokens. **Must be random + secret.** | `openssl rand -hex 32` output |
-| `FIVEM_API_KEY` | Shared key between dashboard and Lua resource. Must match `Config.ApiKey` in the resource. | `openssl rand -hex 32` output |
+| `FIVEM_API_KEY` | Shared key between dashboard and Lua resource. Must match `DASHBOARD_API_KEY` convar in your game server `server.cfg`. | `openssl rand -hex 32` output |
 | `DB_HOST` | MySQL host of your FiveM database. | `127.0.0.1` |
 | `DB_PORT` | MySQL port. | `3306` |
 | `DB_USER` | MySQL username. | `qbox` |

@@ -39,8 +39,8 @@ sudo certbot --nginx -d yourdomain.com
 The Lua resource is not connected.
 
 1. In your FiveM server console, run `ensure nexora-dashboard`. Watch for `[nexora-dashboard]` errors.
-2. Check `Config.ApiKey` in `nexora-dashboard/config.lua` matches `FIVEM_API_KEY` in `/home/fivem/.env`.
-3. Check `Config.DashboardURL` is reachable **from the FiveM server**. Test with `curl https://yourdomain.com/api/health`.
+2. Check `DASHBOARD_API_KEY` convar in `server.cfg` matches `FIVEM_API_KEY` in `/home/fivem/.env`.
+3. Check `DASHBOARD_URL` convar is reachable **from the FiveM server**. Test with `curl https://yourdomain.com/api/health`.
 4. If the FiveM server is behind a firewall, allow outbound 443.
 
 ## Login fails with "invalid credentials"
