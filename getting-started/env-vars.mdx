@@ -1,0 +1,60 @@
+---
+title: "Environment variables"
+description: "Every setting lives in /home/fivem/.env. The install script writes this for you. Edit it by hand if you need to change anything later, then systemctl restart ne"
+---
+
+Every setting lives in `/home/fivem/.env`. The install script writes this for you. Edit it by hand if you need to change anything later, then `systemctl restart nexora-dashboard` to apply.
+
+## Required
+
+| Variable | What it does | Example |
+|----------|--------------|---------|
+| `PORT` | Port the Node server listens on. nginx proxies to this. | `3000` |
+| `JWT_SECRET` | Secret used to sign login tokens. **Must be random + secret.** | `openssl rand -hex 32` output |
+| `FIVEM_API_KEY` | Shared key between dashboard and Lua resource. Must match `Config.ApiKey` in the resource. | `openssl rand -hex 32` output |
+| `DB_HOST` | MySQL host of your FiveM database. | `127.0.0.1` |
+| `DB_PORT` | MySQL port. | `3306` |
+| `DB_USER` | MySQL username. | `qbox` |
+| `DB_PASSWORD` | MySQL password. | `supersecret` |
+| `DB_NAME` | MySQL database name. | `qbox_main` |
+
+## Optional: Discord OAuth
+
+Leave these out / commented to disable Discord login.
+
+| Variable | Example |
+|----------|---------|
+| `DISCORD_CLIENT_ID` | `123456789012345678` |
+| `DISCORD_CLIENT_SECRET` | from Discord developer portal |
+| `DISCORD_REDIRECT_URI` | `https://dash.yourdomain.com/api/auth/discord/callback` |
+
+The redirect URI **must exactly match** what you set in the Discord application's OAuth2 settings.
+
+## Optional: Cfx.re OAuth
+
+Already filled in by the install script with sane defaults:
+
+| Variable | Default |
+|----------|---------|
+| `CFX_FORUM_URL` | `https://forum.cfx.re` |
+| `CFX_APP_NAME` | `Nexora Dashboard` |
+| `CFX_REDIRECT_URI` | `https://yourdomain.com/api/auth/cfx/callback` |
+
+## After editing
+
+```bash
+sudo systemctl restart nexora-dashboard
+sudo journalctl -u nexora-dashboard -f
+```
+
+Watch the log to make sure it boots without errors.
+
+## Security
+
+Lock `.env` so other users can't read it:
+
+```bash
+chmod 600 /home/fivem/.env
+```
+
+Never commit `.env` to git. The repo's `.gitignore` already excludes it.

@@ -1,0 +1,104 @@
+---
+title: "Auto install (recommended)"
+description: "One script does everything: installs Node.js, nginx, SSL, and starts the dashboard as a service. Takes about 5 minutes."
+---
+
+One script does everything: installs Node.js, nginx, SSL, and starts the dashboard as a service. Takes about 5 minutes.
+
+## Before you start
+
+You must have everything from [Requirements](requirements):
+- Linux server with root access.
+- Domain pointed at the server's IP (waited at least 5 minutes after adding DNS).
+- MySQL connection details for your FiveM database.
+- The Nexora Dashboard release ZIP from your Tebex purchase page.
+
+## Step 1: Connect to your server
+
+Open a terminal and SSH in:
+
+```bash
+ssh root@your-server-ip
+```
+
+If you do not log in as `root`, prefix all commands below with `sudo`.
+
+## Step 2: Upload and extract the release ZIP
+
+Upload `nexora-dashboard-vX.X.X.zip` to your server (use FileZilla, WinSCP, or scp). A common path:
+
+```bash
+scp nexora-dashboard-v1.0.0.zip root@your-server-ip:/root/
+```
+
+On the server:
+
+```bash
+cd /home
+unzip /root/nexora-dashboard-v*.zip
+mv nexora-dashboard-v* fivem
+cd fivem
+```
+
+You should now have `/home/fivem/` containing `dist/`, `nexora-dashboard/`, `deploy/`, `package.json`, and `.env.example`.
+
+## Step 3: Run the install script
+
+```bash
+bash deploy/setup-linux.sh
+```
+
+The script will ask you questions. Answers in plain words:
+
+| Prompt | What to type |
+|--------|--------------|
+| `DB host` | Where your FiveM MySQL lives. `127.0.0.1` if same server, otherwise the public host. |
+| `DB port` | Press Enter for `3306` unless yours is different. |
+| `DB user` | Your MySQL username. |
+| `DB password` | Your MySQL password (hidden as you type). |
+| `DB name` | Your FiveM database name (e.g. `qbox_main`). |
+| `Domain` | The domain you pointed at this server, e.g. `dash.mygtaserver.com`. |
+| `Node port` | Press Enter for `3000`. |
+| `Discord client ID` | Paste from Discord developer portal, or press Enter to skip. |
+| `Discord client secret` | Same. Press Enter to skip. |
+| `Obtain SSL certificate now? [Y/n]` | Press Enter for **yes**. |
+
+The script then:
+
+1. Installs Node.js 20, nginx, certbot.
+2. Installs production dependencies (`npm ci --omit=dev`). No build needed, the release ZIP already has the built files.
+3. Writes a `.env` file with your settings.
+4. Configures nginx for your domain.
+5. Gets a free SSL certificate from Let's Encrypt.
+6. Creates a systemd service so the dashboard auto-starts on reboot.
+7. Starts the dashboard.
+
+## Step 4: Save your API key
+
+When the script finishes, it prints something like:
+
+```
+Dashboard URL : https://dash.mygtaserver.com
+FIVEM_API_KEY : 7f3a9b2c...
+```
+
+**Save the `FIVEM_API_KEY`**. You will paste it into the Lua resource config next.
+
+## Step 5: Install the Lua resource
+
+See [Install in FiveM](../lua-resource/install). Short version: drop the `nexora-dashboard` folder into your server's `resources/`, set the `DashboardURL` and `ApiKey` in its `config.lua`, then `ensure nexora-dashboard` in your `server.cfg`.
+
+## Step 6: Open the dashboard
+
+Visit `https://yourdomain.com` and create the first admin account. See [First login](first-login).
+
+## If something breaks
+
+Check the service status:
+
+```bash
+systemctl status nexora-dashboard
+journalctl -u nexora-dashboard -f
+```
+
+See [Troubleshooting](../troubleshooting) for fixes to the most common errors.

@@ -1,0 +1,55 @@
+---
+title: "Installation"
+description: "<div data-gb-custom-block data-tag=\"hint\" data-style=\"info\" class=\"hint hint-info\"><p>All dependencies must be started <strong>before</strong> <code>hbcitizensj"
+---
+
+## Installation
+
+### Requirements
+
+* ox\_lib
+* oxmysql
+* qbx\_core **or** qb-core
+*   ox\_inventory<br>
+
+    <div data-gb-custom-block data-tag="hint" data-style="info" class="hint hint-info"><p>All dependencies must be started <strong>before</strong> <code>hb_citizensjourney</code> in <code>server.cfg</code>.</p></div>
+
+    <div data-gb-custom-block data-tag="hint" data-style="info" class="hint hint-info"><p>The resource should be started before any script contain exports for quests</p></div>
+
+### Steps
+
+**1.** Drop `hb_citizensjourney` into your resources folder.
+
+**2.** Import the database schema:
+
+```sql
+sql/cj_tables.sql
+```
+
+**3.** Add to `server.cfg` after all dependencies:
+
+```
+ensure ox_lib
+ensure oxmysql
+ensure qbx_core
+ensure ox_inventory
+ensure hb_citizensjourney
+```
+
+**4.** Configure your season, quests, and tier rewards in `configs/`.
+
+**5.** Start or restart the resource.
+
+### Database Tables
+
+| Table                | Purpose                                                                      |
+| -------------------- | ---------------------------------------------------------------------------- |
+| `cj_players`         | Per-player, per-season state: tier, XP, premium, streak, passive XP counters |
+| `cj_claimed_rewards` | Which tier rewards have been claimed (free / premium lane)                   |
+| `cj_quest_progress`  | Quest progress and claimed state, period-aware                               |
+
+`period_key` format: `YYYY-MM-DD` (daily) · `YYYYWnn` (weekly) · `season_N` (seasonal)<br>
+
+{% hint style="info" %}
+It's highly encouraged to add your own quests and not depend on the predefined ones
+{% endhint %}

@@ -1,0 +1,34 @@
+---
+title: "Summary"
+description: "A 0-100 tier seasonal battle pass for FiveM servers running QBX or QB-Core. Players earn XP by completing quests, advance through tiers, and claim rewards from"
+---
+
+## Citizen's Journey
+
+{% embed url="https://www.youtube.com/watch?v=21vKs-N_C7o" %}
+
+A 0-100 tier seasonal battle pass for FiveM servers running QBX or QB-Core. Players earn XP by completing quests, advance through tiers, and claim rewards from a Free or Premium track - all through a live, real-time UI.
+
+### Features
+
+* **100-tier season pass** with Free and Premium reward tracks
+* **Three quest categories** - Daily, Weekly, and Seasonal, each supporting optional job restrictions
+* **Job-restricted quests** - attach a `job` field to any quest; the server validates the player's current job from qbx\_core / qb-core before crediting progress
+* **Live UI** - XP bar, tier-up notifications, and quest progress update in real time
+* **Login streak tracking** - consecutive daily logins rewarded (by quest, or add your own code)
+* **Flexible premium purchase** - cash, item, or external web store
+* **Full server-side export API** - integrate with any other resource
+* **Configurable per season** - swap quests, tiers, and rewards in plain Lua config files
+
+### Dependencies
+
+| Resource                                                                      | Purpose                                     |
+| ----------------------------------------------------------------------------- | ------------------------------------------- |
+| [ox\_lib](https://github.com/overextended/ox_lib)                             | Callbacks, notifications                    |
+| [oxmysql](https://github.com/overextended/oxmysql)                            | Database                                    |
+| qbx\_core **or** qb-core                                                      | Player framework - auto-detected at runtime |
+| [ox\_inventory](https://github.com/overextended/ox_inventory) or qb-inventory | Item rewards                                |
+
+{% hint style="warning" %}
+Core scripts are protected via CFX native escrow. Config files are fully open and editable. Purchase grants a single-server licence. Redistribution and resale are prohibited.
+{% endhint %}

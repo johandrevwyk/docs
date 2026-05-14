@@ -1,0 +1,28 @@
+---
+title: "Whitelist"
+---
+
+Route: `/whitelist`
+Sidebar group: Players
+Permission: `whitelist.view` (manage needs `whitelist.manage`)
+
+## What it does
+
+If whitelist mode is on, only listed players can join your server. Manage that list from here.
+
+## What you see
+
+- **Whitelist toggle**, master on/off switch for the whole server.
+- **Whitelist entries** with identifier, note, added by, added at.
+- **Search**, by name or identifier.
+
+## Common actions
+
+- **Toggle whitelist**, server-wide on/off. Requires `whitelist.manage`.
+- **Add player**, paste any identifier (license, Discord, Steam). Requires `whitelist.manage`.
+- **Remove player**, kicks them off the list. Requires `whitelist.manage`.
+- **Add note**, free-text reason (e.g. "approved in #applications").
+
+## Notes
+
+When whitelist mode is on, non-whitelisted players see a custom rejection message on connect. Edit it in `nexora-dashboard/config.lua`.

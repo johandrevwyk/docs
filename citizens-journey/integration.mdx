@@ -1,0 +1,82 @@
+---
+title: "Integration"
+description: "Use the server-side export from your job resource. If the quest has a job field, the server automatically validates the player's current job before crediting pr"
+---
+
+## Integration Guide
+
+### Track Progress from a Job Resource
+
+Use the server-side export from your job resource. If the quest has a `job` field, the server automatically validates the player's current job before crediting progress - you do not need to check it yourself.
+
+{% hint style="warning" %}
+Track progress is forced to 1 increment to combat LUA injectors/executors. More settings available in configs.
+{% endhint %}
+
+```lua
+-- In your police resource's server.lua, when an arrest is made:
+local function onArrest(src)
+    local Player = exports.qbx_core:GetPlayer(src)
+    if not Player then return end
+    local citizenid = Player.PlayerData.citizenid
+
+    -- d_police_arrest has job = 'police'
+    exports['hb_citizensjourney']:trackProgress(citizenid, 'd_police_arrest')
+    exports['hb_citizensjourney']:trackProgress(citizenid, 'w_police_arrest')
+end
+```
+
+```lua
+-- In your mechanic resource's server.lua, when a vehicle repair completes:
+local function onRepair(src)
+    local Player = exports.qbx_core:GetPlayer(src)
+    if not Player then return end
+    local citizenid = Player.PlayerData.citizenid
+
+    exports['hb_citizensjourney']:trackProgress(citizenid, 'd_mechanic_repair')
+    exports['hb_citizensjourney']:trackProgress(citizenid, 'w_mechanic_repair')
+end
+```
+
+### Grant Premium After Web Store Payment
+
+```lua
+-- In your store resource's server.lua, after payment confirmed
+exports['hb_citizensjourney']:setPremium(citizenid, true)
+```
+
+### Award XP as a Prize or Event Reward
+
+```lua
+exports['hb_citizensjourney']:addXP(src, 500)
+```
+
+### React to Tier-Up
+
+```lua
+-- Client-side, in any resource
+AddEventHandler('hb_citizensjourney:cl_tierUp', function(data)
+    lib.notify({ title = 'Tier Up!', description = 'You reached ' .. data.tier_name, type = 'success' })
+end)
+```
+
+### Adding Your Own Job Quest
+
+1. Add the quest definition to the appropriate category in `configs/quests.lua`:
+
+```lua
+daily = {
+    -- existing quests ...
+    { id = 'd_taxi_trips', icon = 'car', title = 'Fare Game', desc = 'Complete 5 taxi fares.', max = 5, xp = 300, job = 'taxi' },
+},
+```
+
+2. Fire the export from your taxi resource's server script when a fare completes:
+
+```lua
+exports['hb_citizensjourney']:trackProgress(citizenid, 'd_taxi_trips')
+```
+
+The server checks `Player.PlayerData.job.name == 'taxi'` automatically. If the player is not on that job the call is invalid.
+
+###

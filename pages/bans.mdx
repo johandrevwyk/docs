@@ -1,0 +1,34 @@
+---
+title: "Bans"
+---
+
+Route: `/bans`
+Sidebar group: Players
+Permission: `bans.view` (create needs `bans.create`, lift needs `bans.delete`)
+
+## What it does
+
+All bans in one place. Permanent and temporary. See who issued each ban, why, and lift them if needed.
+
+## What you see
+
+- **Active bans** at the top, expired bans below.
+- For each ban:
+  - Player name + identifiers.
+  - Reason.
+  - Issued by (admin who created it).
+  - Issued at.
+  - Expires at (or "permanent").
+  - Scope, full account or single license.
+
+## Common actions
+
+- **Create ban**, search a player → set reason + duration → ban. Requires `bans.create`.
+- **Edit ban**, change reason or expiry. Requires `bans.edit`.
+- **Lift ban**, marks ban inactive immediately. Requires `bans.delete`.
+
+All actions are logged to [Audit Logs](audit-logs).
+
+## Notes
+
+The Lua resource enforces bans on connect, players see your reason in the FiveM client. Lifting a ban is instant; no restart needed.

@@ -1,0 +1,144 @@
+---
+title: "Troubleshooting"
+description: "Fixes for the most common problems. If your issue is not here, hop in the Discord and ask (link in the dashboard's Help menu)."
+---
+
+Fixes for the most common problems. If your issue is not here, hop in the Discord and ask (link in the dashboard's Help menu).
+
+## I get "502 Bad Gateway" when opening the dashboard
+
+The Node service is not running.
+
+```bash
+sudo systemctl status nexora-dashboard
+sudo journalctl -u nexora-dashboard -f
+```
+
+Read the log for the actual error. Most common causes:
+
+- **Database connection refused**: wrong `DB_HOST` or `DB_PORT` in `.env`, or your DB does not allow remote connections.
+- **Port already in use**: change `PORT` in `.env` and update `proxy_pass` in nginx.
+- **Missing files**: the release ZIP was not fully extracted. Re-extract and run `npm ci --omit=dev` again.
+
+## SSL certificate failed during install
+
+Your domain DNS is not pointing at this server.
+
+```bash
+dig +short yourdomain.com
+```
+
+The IP must match your server's public IP. Fix DNS, wait 5 minutes, then retry:
+
+```bash
+sudo certbot --nginx -d yourdomain.com
+```
+
+## Dashboard loads but shows no live data
+
+The Lua resource is not connected.
+
+1. In your FiveM server console, run `ensure nexora-dashboard`. Watch for `[nexora-dashboard]` errors.
+2. Check `Config.ApiKey` in `nexora-dashboard/config.lua` matches `FIVEM_API_KEY` in `/home/fivem/.env`.
+3. Check `Config.DashboardURL` is reachable **from the FiveM server**. Test with `curl https://yourdomain.com/api/health`.
+4. If the FiveM server is behind a firewall, allow outbound 443.
+
+## Login fails with "invalid credentials"
+
+- Typo in username or password.
+- If you have Discord OAuth set up, try that path instead.
+- Locked out completely? See below.
+
+## I forgot my admin password
+
+Reset it via the database. SSH in and run:
+
+```bash
+mysql -u <DB_USER> -p <DB_NAME>
+```
+
+Then in the MySQL prompt:
+
+```sql
+UPDATE dash_users
+SET password_hash = '$2b$10$replace_with_a_fresh_bcrypt_hash'
+WHERE username = 'your-username';
+```
+
+Generate a bcrypt hash:
+
+```bash
+node -e "console.log(require('bcrypt').hashSync('your-new-password', 10))"
+```
+
+(Run from `/home/fivem` so `bcrypt` is found.)
+
+## WebSocket disconnects, live data freezes
+
+Your nginx config is missing the WebSocket headers. Make sure the config has:
+
+```nginx
+location /nui-ws {
+    proxy_pass http://localhost:3000;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+    proxy_read_timeout 86400;
+}
+```
+
+Reload nginx after fixing: `sudo nginx -t && sudo systemctl reload nginx`.
+
+## SSL will not renew
+
+Certbot's cron should auto-renew. Force a renewal test:
+
+```bash
+sudo certbot renew --dry-run
+```
+
+Common cause: nginx config got edited and now has invalid syntax. Run `sudo nginx -t` and fix what it reports.
+
+## "Cannot find module 'dist/server/index.js'"
+
+The release ZIP is incomplete or you replaced `dist/` with something. Re-extract the original ZIP into `/home/fivem`, run `npm ci --omit=dev`, then:
+
+```bash
+sudo systemctl restart nexora-dashboard
+```
+
+## Service keeps restarting
+
+Likely a startup crash in a loop. Watch the log:
+
+```bash
+sudo journalctl -u nexora-dashboard -f
+```
+
+If the same error appears every 5 seconds, it is a config problem (usually DB). Fix `.env`, then restart.
+
+## Player screen streaming is laggy or black
+
+- Player has slow upload bandwidth.
+- Player's CEF is throttled. Ask them to set `set ui_alwaysHardwareCursor true` in their FiveM config and restart.
+- Server is dropping the WebSocket because nginx timeouts are too short. Confirm `proxy_read_timeout 86400` is set.
+
+## A new version broke something
+
+Roll back to the previous release ZIP from your Tebex purchase page.
+
+```bash
+sudo systemctl stop nexora-dashboard
+cd /home
+sudo rm -rf fivem
+sudo unzip /path/to/previous-nexora-dashboard-v*.zip
+sudo mv nexora-dashboard-v* fivem
+cd fivem
+sudo cp /root/.env.backup .env   # restore your saved .env
+sudo npm ci --omit=dev
+sudo systemctl start nexora-dashboard
+```
+
+Then report the bug on Discord with the version that broke and the `journalctl` output.
+
+> Tip: keep a copy of `/home/fivem/.env` somewhere safe (e.g. `/root/.env.backup`). Re-extracting overwrites the folder.

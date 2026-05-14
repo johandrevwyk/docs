@@ -1,0 +1,45 @@
+---
+title: "First login & onboarding"
+description: "After install, open https://yourdomain.com. The dashboard detects that no admins exist yet and shows an onboarding wizard."
+---
+
+After install, open `https://yourdomain.com`. The dashboard detects that no admins exist yet and shows an onboarding wizard.
+
+## Step 1: Create the super admin
+
+Pick a username and password. This account gets the wildcard `*` permission, full access to everything.
+
+**Write the password down.** There is no email reset flow. If you lose it, you'll need shell access to reset it via the database.
+
+## Step 2: Set framework
+
+Choose your FiveM framework:
+
+- **QBox**, the modern QB fork.
+- **QBCore**, original QBCore.
+- **ESX**, Legacy / Legacy Plus.
+
+The dashboard auto-detects in most cases. If it picks wrong, fix it on the Settings page later.
+
+## Step 3: Verify game server connection
+
+The wizard asks for your `FIVEM_API_KEY` and shows whether the Lua resource has connected.
+
+Status meanings:
+
+- **Connected**, Lua resource is running and reaches the dashboard.
+- **Waiting**, dashboard is waiting for the resource to call in. Check that `ensure nexora-dashboard` is in `server.cfg`, the resource is started, and `DashboardURL` + `ApiKey` are correct in `config.lua`.
+
+## Step 4: Done
+
+You land on the main Dashboard. From here:
+
+- Invite more admins on the [Users](../pages/users) page.
+- Create roles with fine-grained permissions on the [Roles](../pages/roles) page.
+- Tune polling intervals + event retention on the [Settings](../pages/settings) page.
+
+## Logging in later
+
+After onboarding, the login page is just `https://yourdomain.com/login`. Username + password, or Discord OAuth if you configured it.
+
+Forgot password? See [Troubleshooting](../troubleshooting#i-forgot-my-admin-password).

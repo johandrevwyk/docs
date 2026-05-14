@@ -1,0 +1,25 @@
+---
+title: "Chat"
+---
+
+Route: `/chat`
+Sidebar group: Players
+Permission: `chat.view`
+
+## What it does
+
+Full in-game chat history. Search what was said and when.
+
+## What you see
+
+- **Message row** with player, channel (global / OOC / staff), message text, timestamp.
+- **Search bar**: free-text + filters by channel and player.
+
+## Common actions
+
+- **Click player** → [Player Profile](player-profile).
+- **Filter** by channel, useful for finding staff comms vs IC chat.
+
+## Notes
+
+The Lua resource hooks the default Cfx `chatMessage` event, so it captures every message sent through the built-in cfx chat or any chat resource that forwards to it. If your chat resource bypasses `chatMessage` entirely, the page will be empty, see Discord for help wiring a custom integration.

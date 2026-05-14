@@ -1,0 +1,30 @@
+---
+title: "Summary"
+description: "/ads opens a polished NUI composer where players write predefined ads (police callouts, EMS notices, mechanic specials, taxi calls, anonymous messages, custom b"
+---
+
+## 📢 Ads System - Modern Advertisement Suite for QB-Core / QBox
+
+**One command. Searchable composer. Job-gated broadcasts. Per-ad billing. Discord logs. Admin panel. Built for QB-Core&#x20;**_**and**_**&#x20;QBox.**
+
+`/ads` opens a polished NUI composer where players write predefined ads (police callouts, EMS notices, mechanic specials, taxi calls, anonymous messages, custom business ads…) - sent as a clean, scrollable banner that broadcasts to every player on the server. Server-side cooldowns, billing, profanity filter, and oxmysql history out of the box.
+
+***
+
+### ✨ Headline Features
+
+* **🔍 Searchable Composer** - Type to filter ad types instantly. Job-gated entries hidden automatically.
+* **📋 Predefined Ads** - Police, EMS, Mechanic, Taxi, Realtor, Lawyer, Anonymous, General - fully editable in `shared/adtypes.lua`.
+* **✏️ Custom Ads Tab** - Players craft their own banners with title, message, category, logo URL, background URL, text colour, and sound. Live preview while typing.
+* **🕒 Personal History** - Last 50 ads stored per player. One-click **Resend** pre-fills the composer.
+* **🛡️ Admin Panel** - Recent-ads audit, ban / unban / edit ban per CitizenID, ad scheduling (date + time + sender + subject + message), kill running ad, disable system, clear stuck broadcast lock.
+* **💰 Per-Ad Billing** - Each predefined ad has its own price. Custom ads charged a flat fee from bank. Cash-first / bank-first toggle.
+* **⏱️ Server-Side Cooldowns** - Per-player throttle, configurable. Cooldown bar shown in the UI.
+* **🚫 Word Filter** - Block or censor profanity (configurable list, action `block` or `censor`).
+* **📡 Discord Logging** - Rich embed sent on every ad. Webhook URL configurable.
+* **🗄️ oxmysql History** - Auto-creates `ads_history` table. Per-player row limit configurable.
+* **🔊 Sound System** - OGG via NUI (default) or GTA frontend beep fallback. Per-ad-type sound override.
+* **📍 Banner Positions** - `top-center`, `top-left`, `top-right`, `bottom-center`, `bottom-left`, `bottom-right`.
+* **🎨 Banner Branding** - Per-type logo, background, text colour. Player-defined colours on custom ads.
+* **🧭 Job Gating** - `allowedJobs = { 'police', 'lspd', 'sheriff' }`. Empty = everyone. `adminOnly = true` for staff-only types.
+* **⚙️ Framework Detection** - `Config.Framework = 'auto'` finds QB-Core or qbx\_core; force either if you prefer.

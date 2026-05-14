@@ -1,0 +1,29 @@
+---
+title: "Settings"
+---
+
+Route: `/settings`
+Sidebar group: System
+Permission: `settings.view` (edit needs `settings.edit`)
+
+## What it does
+
+Dashboard-wide configuration. Tune polling intervals, alert thresholds, retention windows, and check the health of every polled subsystem.
+
+## What you see
+
+- **Poller status**, each background poller (players, vehicles, money, etc.), last run time, errors.
+- **Polling intervals**, how often each poller runs (in seconds).
+- **Retention**, how long to keep audit logs, events, position history, kill log.
+- **Economy alert thresholds**, amounts that trigger info / warn / critical alerts.
+- **Resource health**, which game-side resources the dashboard depends on (e.g. `ox_inventory`, `jg-advancedgarages`).
+
+## Common actions
+
+- **Edit interval** → field appears in seconds. Requires `settings.edit`.
+- **Edit retention** → days. Requires `settings.edit`.
+- **Force poller run**, kicks one poller immediately.
+
+## Notes
+
+Lowering poll intervals makes live data fresher but increases DB load. The default values are tuned for ~64-slot servers. Don't go below 2 seconds unless you know what you're doing.

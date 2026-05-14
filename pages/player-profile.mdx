@@ -1,0 +1,35 @@
+---
+title: "Player Profile"
+---
+
+Route: `/players/:license`
+Sidebar group: Players
+Permission: `players.view` (edit needs `players.edit`)
+
+## What it does
+
+Everything about one player. Their characters, money, inventory, vehicles, properties, history, all on one page.
+
+## What you see
+
+- **Header**, name, license, identifiers, Discord avatar if linked.
+- **Character tabs**, switch between characters on this account.
+- **Money panel**, cash, bank, crypto, dirty money for the selected character.
+- **Job / gang**, current job, grade, gang membership.
+- **Inventory**, every item, quantity, slot, plus stashes if owned.
+- **Vehicles**, owned + stored vehicles, garage location.
+- **Properties**, owned/rented properties with addresses.
+- **History**, recent admin actions, bans, kicks, notes.
+
+## Common actions
+
+- **Edit money**, adjust cash / bank / crypto. Requires `money.edit`. Reason is logged to audit.
+- **Edit inventory**, add/remove items, change quantities. Requires `inventories.edit`.
+- **Ban / unban**, opens the ban dialog. Requires `bans.create`.
+- **Add note**, internal admin note attached to this player.
+
+Every edit appears on the [Audit Logs](audit-logs) page.
+
+## Notes
+
+Some panels are framework-specific (e.g. gang info is QBox/QBCore only). Missing data usually means that feature isn't enabled in your framework.

@@ -1,0 +1,27 @@
+---
+title: "Audit Logs"
+---
+
+Route: `/logs`
+Sidebar group: System
+Permission: `logs.view`
+
+## What it does
+
+Every meaningful admin action is recorded here. Bans, kicks, money edits, role changes, resource restarts, the lot. Use it to investigate "who did what when".
+
+## What you see
+
+- **Event row** with timestamp, admin username, action type, target (player / resource), details, source IP.
+- **Filters**, action type, admin, date range.
+- **Search**, free-text across details.
+
+## Common actions
+
+- **Click row** → expand to see full payload (before / after values where relevant).
+- **Click admin** → [Users](users) entry.
+- **Click target player** → [Player Profile](player-profile).
+
+## Notes
+
+Audit logs are append-only. There is no UI to delete them. Retention is configurable on [Settings](settings), by default they keep forever.

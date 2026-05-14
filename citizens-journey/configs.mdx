@@ -1,0 +1,228 @@
+---
+title: "Configs"
+description: "All config files live in configs/ and are not escrowed - edit freely."
+---
+
+## Configuration
+
+All config files live in `configs/` and are **not escrowed** - edit freely.
+
+***
+
+### config.lua
+
+#### Season
+
+```lua
+Config.Season = {
+    id            = 1,                -- integer, incremented each season
+    name          = 'Season 1',       -- internal name
+    display       = 'Season 1 - Expedition',  -- shown in the UI header
+    end_timestamp = 1748390400,       -- unix timestamp (UTC) when the season ends (https://www.epochconverter.com/)
+    max_tiers     = 50,               -- how many tiers are active this season
+}
+```
+
+#### Framework & Inventory
+
+```lua
+Config.Framework = 'auto'   -- 'auto' | 'qbx_core' | 'qb-core'
+Config.Inventory = 'auto'   -- 'auto' | 'ox_inventory' | 'qb-inventory'
+```
+
+Auto-detection picks the first running resource. Set explicitly if you have both installed.
+
+#### XP & Tiers
+
+```lua
+Config.XpPerTier = 2500   -- flat XP required per tier advance
+```
+
+#### Theme
+
+```lua
+Config.Theme = 'gold'   -- see Player UI → Themes for all options
+```
+
+#### Passive XP
+
+Players earn XP automatically for being online and active.
+
+```lua
+Config.PassiveXP = {
+    enabled            = true,
+    xp_per_interval    = 10,    -- XP awarded per tick
+    interval_minutes   = 5,     -- tick frequency in minutes
+    afk_threshold      = 120,   -- seconds idle before pausing (0 = never pause)
+    daily_playtime_cap = 120,   -- max active minutes per day that earn passive XP (0 = no cap)
+}
+```
+
+The daily play time counter (`dailyPlaySecs`) only increments when XP is actually awarded - it does not tick while the player is AFK or has hit the daily cap.
+
+#### Discord Webhook
+
+```lua
+Config.Webhook = {
+    enabled             = false,
+    url                 = '',
+    log_set_premium     = true,   -- setPremium() export called (admin grant / revoke)
+    log_purchase        = true,   -- player buys premium in-game
+    log_tier_up         = false,  -- player tiers up (can be spammy on active servers)
+    log_tier_up_min     = 25,     -- only post tier-ups at or above this tier
+    log_quest_complete  = true,   -- quest reaches max progress
+    log_quest_claim     = true,   -- player claims quest XP reward
+    log_xp_gain         = false,  -- every XP award (spammy)
+    log_reward_claim    = true,   -- tier reward claimed
+}
+```
+
+#### Premium Purchase
+
+```lua
+Config.PremiumPurchase = {
+    method = 'cash',          -- 'cash' | 'item' | 'export'
+
+    cash_account = 'cash',    -- 'cash' or 'bank'
+    cash_price   = 15000,
+
+    item     = 'premium_voucher',
+    item_qty = 1,
+
+    messages = {
+        success            = "(set in locale)",
+        already_owned      = "(set in locale)",
+        insufficient_funds = "(set in locale)",
+        insufficient_item  = "(set in locale)",
+        external           = "(set in locale)",  -- shown when method = 'export'
+    },
+}
+```
+
+***
+
+### quests.lua
+
+#### Tier Names
+
+```lua
+Config.TierNames = {
+    [1]  = 'Newcomer',
+    [25] = 'Hustler',
+    -- highest matching threshold wins
+}
+```
+
+#### Quest Definition Fields
+
+| Field   | Type   | Required | Description                                                                 |
+| ------- | ------ | -------- | --------------------------------------------------------------------------- |
+| `id`    | string | yes      | Unique identifier used when calling `trackProgress`                         |
+| `icon`  | string | yes      | Icon key for the UI                                                         |
+| `title` | string | yes      | Display name                                                                |
+| `desc`  | string | yes      | Shown to the player                                                         |
+| `max`   | number | yes      | Target value to complete the quest                                          |
+| `xp`    | number | yes      | XP awarded on claim                                                         |
+| `job`   | string | no       | If set, only players whose `job.name` matches this string can earn progress |
+
+#### Categories
+
+Quests belong to one of three categories, which determine their reset period:
+
+| Category | Resets                       |
+| -------- | ---------------------------- |
+| `daily`  | Every day at midnight        |
+| `weekly` | Every week                   |
+| `season` | Never - runs the full season |
+
+#### Job-Restricted Quests
+
+Add a `job` field to any quest in any category. The job name must match `Player.PlayerData.job.name` exactly (e.g. `'police'`, `'mechanic'`, `'ambulance'`).
+
+```lua
+daily = {
+    { id = 'd_police_arrest', icon = 'target', title = 'Law & Order',
+      desc = 'Arrest 10 suspects while on duty.', max = 10, xp = 400, job = 'police' },
+},
+weekly = {
+    { id = 'w_mechanic_repair', icon = 'wrench', title = 'Shop Star',
+      desc = 'Repair 20 vehicles this week.', max = 20, xp = 1800, job = 'mechanic' },
+},
+```
+
+The UI shows a blue job badge (e.g. `Police`) inline next to the category tag. Progress is silently rejected server-side if the player is on the wrong job.
+
+***
+
+### tiers.lua
+
+Defines rewards for each tier on the Free and Premium tracks.
+
+```lua
+Config.Tiers = {
+    [1] = {
+        free    = { type = 'item',  item = 'bandage', qty = 3,    label = 'Bandages x3', rarity = 'common' },
+        premium = { type = 'item',  item = 'money', qty = 5000,   label = '$5,000',        rarity = 'rare'   },
+    },
+    [2] = {
+        free    = { type = 'xp',    amount = 2500,               label = '+2,500 XP',     rarity = 'rare'   },
+        premium = { type = 'item',  item = 'medikit', qty = 1,   label = 'Medikit',       rarity = 'epic'   },
+    },
+}
+```
+
+**Reward type fields:**
+
+| `type`   | Required extra fields              |
+| -------- | ---------------------------------- |
+| `'item'` | `item` (ox\_inventory name), `qty` |
+| `'xp'`   | `amount`                           |
+
+All rewards also need `label` (UI display name) and `rarity` (`'common'` / `'rare'` / `'epic'` / `'legendary'`).
+
+Only `Config.Season.max_tiers` entries are read; extras are ignored.
+
+***
+
+### quests\_handler.lua (client-side)
+
+Detects in-game events on the client and calls:
+
+```lua
+TriggerServerEvent('hb_citizensjourney:sv_trackProgress', questId)
+```
+
+The server validates and caps the amount. Use standard FiveM client natives here.
+
+```lua
+-- Example: track driving distance
+CreateThread(function()
+    while true do
+        Wait(2000)
+        local ped = PlayerPedId()
+        if IsPedInAnyVehicle(ped, false) then
+            -- measure distance, accumulate, then:
+            TriggerServerEvent('hb_citizensjourney:sv_trackProgress', 'd2')
+        end
+    end
+end)
+```
+
+***
+
+### quests\_handler\_sv.lua (server-side)
+
+Use the export from another resource:
+
+```lua
+exports['hb_citizensjourney']:trackProgress(citizenid, questId)
+```
+
+For job quests, trigger the export from your job resource when the relevant action occurs. Job validation is automatic.
+
+```lua
+-- Example: police arrest triggers progress on d_police_arrest and w_police_arrest
+-- Fire from your police resource's server.lua:
+exports['hb_citizensjourney']:trackProgress(citizenid, 'd_police_arrest')
+exports['hb_citizensjourney']:trackProgress(citizenid, 'w_police_arrest')
+```

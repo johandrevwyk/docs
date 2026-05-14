@@ -1,0 +1,31 @@
+---
+title: "Players"
+---
+
+Route: `/players`
+Sidebar group: Players
+Permission: `players.view`
+
+## What it does
+
+Offline-and-online player database. Every account that ever joined your server, grouped by license. Each row shows all the characters under that license.
+
+## What you see
+
+- **Account row** with:
+  - All characters (one or many).
+  - Total money across characters (cash / bank / crypto / dirty).
+  - Job + gang of the active character.
+  - Inventory item count.
+  - Discord, Steam, FiveM, license identifiers.
+  - First seen + last seen timestamps.
+- **Search bar**, name, license, identifier.
+
+## Common actions
+
+- **Click row** → opens full [Player Profile](player-profile).
+- **Sort** by money, last seen, first seen.
+
+## Notes
+
+Pulls data from your existing FiveM tables, `players` / `users` depending on framework. The dashboard never deletes or modifies these without explicit action.

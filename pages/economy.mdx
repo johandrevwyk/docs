@@ -1,0 +1,30 @@
+---
+title: "Economy"
+---
+
+Route: `/money`
+Sidebar group: World
+Permission: `money.view` (edit needs `money.edit`, ack alerts needs `money.alerts.ack`)
+
+## What it does
+
+Track the total money flowing through your server and catch suspicious activity with automatic alerts.
+
+## What you see
+
+- **Totals panel**, combined cash, bank, crypto, dirty across all characters.
+- **Transaction log**, every money change with player, amount, source, timestamp.
+- **Alerts panel**, auto-generated warnings:
+  - Severity badges (info / warn / critical).
+  - Examples: sudden large transfer, top-1% bank balance, recent dirty money spike.
+
+## Common actions
+
+- **Filter** transactions by player, amount range, source.
+- **Acknowledge alert**, marks it handled. Requires `money.alerts.ack`.
+- **Ack all**, clears every active alert at once.
+- **Click player** in a transaction → [Player Profile](player-profile).
+
+## Notes
+
+Alert thresholds are tunable on [Settings](settings). Acknowledging an alert doesn't fix the underlying transaction, it just hides it from the alert feed.

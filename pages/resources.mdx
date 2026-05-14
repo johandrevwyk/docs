@@ -1,0 +1,28 @@
+---
+title: "Resources"
+---
+
+Route: `/resources`
+Sidebar group: System
+Permission: `resources.view` (manage needs `resources.manage`)
+
+## What it does
+
+The FiveM resource manager you wished `txAdmin` had. List, start, stop, restart any resource on your game server straight from the dashboard.
+
+## What you see
+
+- **Resource row** with name, status (started / stopped / loading), version (from `fxmanifest.lua`).
+- **Filters**, status, search by name.
+
+## Common actions
+
+- **Start**, runs `ensure <name>`. Requires `resources.manage`.
+- **Stop**, runs `stop <name>`. Requires `resources.manage`.
+- **Restart**, `stop` + `start`. Requires `resources.manage`.
+
+All actions go through the Lua resource and are logged to [Audit Logs](audit-logs).
+
+## Notes
+
+You **cannot** stop `nexora-dashboard` from here, that would cut off the dashboard's own connection. Use the game server console if you really need to.

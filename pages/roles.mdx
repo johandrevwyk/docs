@@ -1,0 +1,37 @@
+---
+title: "Roles"
+---
+
+Route: `/roles`
+Sidebar group: Access
+Permission: `roles.view` (create / edit / delete need matching `roles.*`)
+
+## What it does
+
+Define what each role can do. Bundle permissions into named groups like "Moderator", "Trial Admin", "Owner". Then assign roles to [Users](users).
+
+## What you see
+
+- **Role list** with name, color, member count.
+- **Permission matrix**, grid showing every permission grouped by area (Overview, Players, World, System, Integrations, Access). Toggle each on/off.
+
+## Common actions
+
+- **Create role**, name, color, pick permissions. Requires `roles.create`.
+- **Edit role**, change permissions or name. Requires `roles.edit`.
+- **Delete role**, only if no users hold it. Requires `roles.delete`.
+
+## Permission groups
+
+| Group | What it covers |
+|-------|----------------|
+| Overview | Dashboard home, online players, live map, screen streams |
+| Players | Player DB, inventories, queue, whitelist, bans, kills, chat, phone |
+| World | Vehicles, economy, properties |
+| System | Audit logs, resources, entities, console, storage, settings |
+| Integrations | Discord bot |
+| Access | Users, roles |
+
+## Notes
+
+The built-in **Super Admin** role grants the wildcard `*` permission and can never be deleted or downgraded from the UI, protects against lockout. To remove super admin from yourself, promote another user first.

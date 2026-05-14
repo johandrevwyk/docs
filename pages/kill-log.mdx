@@ -1,0 +1,26 @@
+---
+title: "Kill Log"
+---
+
+Route: `/kills`
+Sidebar group: Players
+Permission: `kills.view`
+
+## What it does
+
+Searchable log of every player kill. Useful for investigating RDM reports and reviewing PvP zones.
+
+## What you see
+
+- **Kill row** with killer, victim, weapon, distance, coordinates, timestamp.
+- **Filters**, weapon type, time range, player.
+- **Search**, by either player.
+
+## Common actions
+
+- **Click killer / victim** → [Player Profile](player-profile).
+- **Click row** → opens it on the [Live Map](live-map) at that coordinate.
+
+## Notes
+
+Kill events come from the Lua resource hooking `BaseEvents.OnPlayerDying`. NPCs are excluded. Suicides (no killer) show as "self".

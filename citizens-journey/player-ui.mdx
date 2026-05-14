@@ -1,0 +1,50 @@
+---
+title: "Player UI"
+description: "Default: F7. Players can rebind it in GTA V Settings → Key Bindings. The command is hbcjtoggle."
+---
+
+## Player UI
+
+### Keybind
+
+Default: **F7**. Players can rebind it in GTA V Settings → Key Bindings. The command is `hb_cj_toggle`.
+
+### Tabs
+
+| Tab         | Description                                                                                                                                                               |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Pass**    | Horizontal tier track with Free and Premium reward cards. Click an unlocked card to claim.                                                                                |
+| **Quests**  | Active quests categorised by Daily / Weekly / Season with live progress bars and claim buttons. Job-restricted quests show a coloured job badge next to the category tag. |
+| **Rewards** | Full history of all claimed rewards for the current season.                                                                                                               |
+
+### Pass Tab
+
+* XP banner shows current tier (gold badge), tier name, XP progress bar, pass progress %, and login streak
+* Tracked quest strip shows up to 3 pinned quests with mini progress bars
+* Tier rail scrolls horizontally through all tiers
+* Passed tiers show a gold spine and checkmark node
+* Current tier card pulses with a gold glow - click to claim
+* **Jump** button navigates instantly to any tier milestone
+
+### Quests Tab
+
+* Left panel: category selector (Daily, Weekly, Seasonal)
+* Right panel: quest list with icon, title, description, progress bar, and XP reward
+* Quests with a job restriction show a blue **job badge** (e.g. `Police`, `Mechanic`) inline next to the type tag - only players currently on that job will have their progress tracked
+* Completed quests show a **Claim** button; claimed quests are greyed out
+* Reset label shown per category (daily reset / weekly reset / season end)
+
+### Themes
+
+Set `Config.Theme` in `config.lua`.
+
+| Value    | Colour                      |
+| -------- | --------------------------- |
+| `gold`   | Warm amber / gold (default) |
+| `blue`   | Blue                        |
+| `cyan`   | Cyan                        |
+| `green`  | Green                       |
+| `orange` | Orange                      |
+| `purple` | Purple                      |
+| `red`    | Red                         |
+| `yellow` | Yellow                      |

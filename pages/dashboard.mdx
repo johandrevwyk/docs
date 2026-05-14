@@ -1,0 +1,30 @@
+---
+title: "Dashboard"
+---
+
+Route: `/`
+Sidebar group: Overview
+Permission: `dashboard.view`
+
+## What it does
+
+The landing page. Shows a live snapshot of your server, uptime, player count, total economy, recent events, so you can see at a glance whether everything is healthy.
+
+## What you see
+
+- **Server card**, name, framework (QBox / QBCore / ESX), version, uptime.
+- **Online players count**, current vs. max slots.
+- **Economy totals**, combined cash, bank, crypto and dirty money across all players.
+- **Online players list**, first few names with quick links to their profiles.
+- **Event feed**, last few admin actions, joins, bans, kicks, deaths.
+
+All cards update live via WebSocket. No refresh button.
+
+## Common actions
+
+- Click an online player → opens their [Online Players](online-players) row.
+- Click an event → opens the related player or resource page.
+
+## Notes
+
+If most cards say "," or "0", your Lua resource is not connected. See [Lua install](../lua-resource/install).

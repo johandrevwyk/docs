@@ -1,0 +1,53 @@
+---
+title: "Client Events"
+description: "These events fire automatically on the player's client when server state changes. Listen to them from any other resource's client script."
+---
+
+## Client Events
+
+These events fire automatically on the player's client when server state changes. Listen to them from any other resource's client script.
+
+### Event Reference
+
+| Event                                 | Payload                                                        |
+| ------------------------------------- | -------------------------------------------------------------- |
+| `hb_citizensjourney:cl_xpUpdate`      | `{ tier, xp, xp_needed, total_xp, tier_name, next_tier_name }` |
+| `hb_citizensjourney:cl_tierUp`        | `{ tier, tier_name }`                                          |
+| `hb_citizensjourney:cl_questUpdate`   | `{ id, title, current, max, claimed }`                         |
+| `hb_citizensjourney:cl_dailyXpUpdate` | `{ dailyPlaySecs, dailyPassiveXp }`                            |
+| `hb_citizensjourney:cl_premiumUpdate` | `{ hasPremium }`                                               |
+| `hb_citizensjourney:cl_refreshData`   | _(no payload - re-fetch from server)_                          |
+
+### Notes
+
+* `cl_dailyXpUpdate` fires only when passive XP is enabled and XP is actually awarded (player is not AFK and has not hit the daily cap). The `dailyPlaySecs` counter increments in lockstep with passive XP gain.
+* `cl_questUpdate` fires every time quest progress is written, including partial increments - not only on completion.
+
+### Example
+
+```lua
+-- React to tier-up in another client script
+AddEventHandler('hb_citizensjourney:cl_tierUp', function(data)
+    -- data.tier      = new tier number
+    -- data.tier_name = tier name string
+    lib.notify({
+        title       = 'Tier Up!',
+        description = 'You reached ' .. data.tier_name,
+        type        = 'success',
+    })
+end)
+
+-- React to quest completion
+AddEventHandler('hb_citizensjourney:cl_questUpdate', function(data)
+    if data.claimed then return end
+    if data.current >= data.max then
+        lib.notify({ title = 'Quest Complete', description = 'Head to the pass to claim your XP!', type = 'info' })
+    end
+end)
+
+-- Show passive XP progress
+AddEventHandler('hb_citizensjourney:cl_dailyXpUpdate', function(data)
+    -- data.dailyPlaySecs  = seconds of active play today that earned passive XP
+    -- data.dailyPassiveXp = total passive XP earned today
+end)
+```

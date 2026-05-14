@@ -1,0 +1,26 @@
+---
+title: "Console"
+---
+
+Route: `/console`
+Sidebar group: System
+Permission: `console.view` (execute needs `console.execute`)
+
+## What it does
+
+Live tail of your FiveM server console, plus an input box to run server commands without SSHing in.
+
+## What you see
+
+- **Log stream**, every line from the FiveM console, color-coded by channel (info / warn / error / script).
+- **Search bar**, filter the visible history.
+- **Command input** at the bottom (only visible with `console.execute`).
+
+## Common actions
+
+- **Search**, narrow down a noisy log.
+- **Run command**, type any txAdmin / FiveM console command (`refresh`, `restart resource`, `say "..."`, `setperm`...). Requires `console.execute`. Every command is logged to [Audit Logs](audit-logs).
+
+## Notes
+
+Output appears with a small delay (~1s) because the Lua resource batches lines. Don't use this page for password-style secrets, every line is broadcast to all admins watching the page.

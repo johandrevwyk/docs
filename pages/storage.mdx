@@ -1,0 +1,27 @@
+---
+title: "Storage"
+---
+
+Route: `/storage`
+Sidebar group: System
+Permission: `storage.view` (upload needs `storage.upload`, delete needs `storage.delete`)
+
+## What it does
+
+A file browser for the dashboard's storage folder, screen recordings, exported reports, uploaded assets. See what's there, free up disk space.
+
+## What you see
+
+- **Disk usage bar**, used / total.
+- **Folder tree**, `recordings/`, `exports/`, `uploads/`.
+- **File list** with name, size, modified date.
+
+## Common actions
+
+- **Download file**, saves to your computer.
+- **Upload file**, drag & drop. Requires `storage.upload`.
+- **Delete file**, gone immediately. Requires `storage.delete`.
+
+## Notes
+
+Recordings can grow fast. Set a retention policy on [Settings](settings) to auto-prune old files, or do it manually here.

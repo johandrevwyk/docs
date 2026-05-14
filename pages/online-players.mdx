@@ -1,0 +1,33 @@
+---
+title: "Online Players"
+---
+
+Route: `/online`
+Sidebar group: Overview
+Permission: `online.view` (plus `online.stream` for screen viewing, `online.record` for recording)
+
+## What it does
+
+Real-time list of every player currently in your server. Watch their stats live and stream their screen straight from the game.
+
+## What you see
+
+- **Player row** for each connection:
+  - Name + character.
+  - Ping (ms), green good, red bad.
+  - Health bar.
+  - Vehicle (if driving).
+  - Identifiers (Discord, Steam, FiveM, license).
+  - IP address.
+- **Search bar**, filter by name, license, Discord, Steam.
+
+## Common actions
+
+- **Click row** → opens detailed view + screen stream.
+- **Watch screen** → live video feed of what the player sees (NUI screen capture). Requires `online.stream`.
+- **Record** → save the stream to disk. Requires `online.record`. Files land in `storage/recordings/`.
+- **Open profile** → jump to their full [Player Profile](player-profile).
+
+## Notes
+
+Streaming uses CEF on the game side; it's hidden from the player. Quality depends on their upload bandwidth. Heavy streaming impacts game performance for that player.

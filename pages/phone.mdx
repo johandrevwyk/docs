@@ -1,0 +1,25 @@
+---
+title: "Phone"
+---
+
+Route: `/phone`
+Sidebar group: Players
+Permission: `phone.view`
+
+## What it does
+
+Status of the in-game phone system (`lb-phone`). Diagnostics, not message-snooping.
+
+## What you see
+
+- **Health check**, is `lb-phone` running, version, last heartbeat.
+- **Capabilities**, which phone features the dashboard can query.
+- **System status**, pending issues, error counts.
+
+## Common actions
+
+This page is read-only. Use it to confirm the phone resource is healthy.
+
+## Notes
+
+The dashboard does **not** read private phone messages. The phone is the player's IC private space, only metadata and system health appear here, by design.

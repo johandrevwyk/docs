@@ -1,0 +1,28 @@
+---
+title: "Properties"
+---
+
+Route: `/properties`
+Sidebar group: World
+Permission: `properties.view` (edit needs `properties.edit`)
+
+## What it does
+
+List of every property in your server, houses, apartments, rentals. See who owns what and how much they pay.
+
+## What you see
+
+- **Property row** with address, type, owner, rent amount, rent status (paid / overdue).
+- **Filters**, type, status, owner.
+- **Search**, by address or owner license.
+
+## Common actions
+
+- **Click row** → property detail.
+- **Reassign owner**, change who owns the property. Requires `properties.edit`. Logged.
+- **Change rent**, adjust monthly rent. Requires `properties.edit`.
+- **Force evict**, clears ownership. Requires `properties.edit`.
+
+## Notes
+
+Property data comes from your housing script's tables. Supported out of the box: `qb-houses`, `qbx_houses`, `ps-housing` and most ESX housing variants.

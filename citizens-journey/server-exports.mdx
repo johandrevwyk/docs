@@ -1,0 +1,74 @@
+---
+title: "Server Exports"
+description: "All exports are server-side. Call them from another resource's server script:"
+---
+
+All exports are **server-side**. Call them from another resource's server script:
+
+```lua
+-- Is player data loaded in cache?
+exports['hb_citizensjourney']:isLoaded(citizenid)             -- boolean
+
+-- Full snapshot of player state
+exports['hb_citizensjourney']:getPlayerData(citizenid)
+-- returns: { tier, xp, total_xp, premium, streak } or nil
+```
+
+### XP
+
+```lua
+-- Add XP (triggers tier-up, pushes UI update, optional notify)
+exports['hb_citizensjourney']:addXP(src, 500)
+exports['hb_citizensjourney']:addXP(src, 500, false)  -- silent
+
+-- Remove XP (de-tiers if needed, floors at tier 1 / 0 XP)
+exports['hb_citizensjourney']:removeXP(src, 250)
+
+-- Set total XP - recalculates tier from scratch
+exports['hb_citizensjourney']:setXP(src, 12500)
+```
+
+### Tier
+
+```lua
+-- Read current tier
+exports['hb_citizensjourney']:getTier(citizenid)              -- number | nil
+
+-- Force-set tier (resets current-tier XP to 0)
+exports['hb_citizensjourney']:setTier(src, 50)
+
+-- Add/subtract tiers (clamps to [1, max_tiers], resets XP to 0)
+exports['hb_citizensjourney']:addTiers(src, 5)
+exports['hb_citizensjourney']:addTiers(src, -2)
+```
+
+### Premium Pass
+
+```lua
+-- Check premium status
+exports['hb_citizensjourney']:hasPremium(citizenid)           -- boolean | nil
+
+-- Grant or revoke (pushes live UI update)
+exports['hb_citizensjourney']:setPremium(citizenid, true)
+exports['hb_citizensjourney']:setPremium(citizenid, false)
+```
+
+### Quest Progress
+
+```lua
+-- Increment progress by amount (job restriction validated automatically)
+exports['hb_citizensjourney']:trackProgress(citizenid, 'd_police_arrest')
+
+-- Set absolute progress value (resets claimed state)
+exports['hb_citizensjourney']:setQuestProgress(citizenid, 'd4', 3000)
+
+-- Reset a single quest for the current period
+exports['hb_citizensjourney']:resetQuest(citizenid, 'w3')
+
+-- Reset all quests of a type
+exports['hb_citizensjourney']:resetQuestType(citizenid, 'daily')
+```
+
+{% hint style="info" %}
+When \`trackProgress\` is called for a quest that has a \`job\` field, the server checks \`Player.PlayerData.job.name\` against the quest's job requirement. If the player is not on that job the call returns \`false\` and no progress is written.
+{% endhint %}

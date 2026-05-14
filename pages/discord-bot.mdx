@@ -1,0 +1,28 @@
+---
+title: "Discord Bot"
+---
+
+Route: `/discord-bot`
+Sidebar group: Integrations
+Permission: `discord.view` (manage needs `discord.manage`)
+
+## What it does
+
+Status and configuration for the dashboard's Discord bot, used for role sync, announcements, and Discord OAuth login.
+
+## What you see
+
+- **Bot status**, online / offline, latency, uptime.
+- **Guilds**, every Discord server the bot is in.
+- **Role sync**, which Discord roles map to which dashboard roles.
+- **Capabilities**, features the bot can use (slash commands, role management, etc.).
+
+## Common actions
+
+- **Refresh status**, pings the bot now.
+- **Sync roles**, pulls current Discord roles for all admins. Requires `discord.manage`.
+- **Edit role mapping**, link a Discord role to a dashboard [Role](roles). Requires `discord.manage`.
+
+## Notes
+
+The bot is optional. Skip this page entirely if you don't use Discord OAuth. To enable, set `DISCORD_*` vars in [.env](../getting-started/env-vars) and restart the service.

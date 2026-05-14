@@ -1,0 +1,29 @@
+---
+title: "Inventories"
+---
+
+Route: `/inventories`
+Sidebar group: Players
+Permission: `inventories.view` (edit needs `inventories.edit`)
+
+## What it does
+
+Search all player inventories across your server. Find who has what, useful for tracking dupes, stolen items or rare drops.
+
+## What you see
+
+- **Search bar**, by license, player name, or item name.
+- **Inventory list** with item icons, quantities, owners.
+- **Category filters**, weapons, drugs, money, misc.
+- **Recent events**, last add / remove events with timestamp and player.
+- **Stash viewer**, house, glovebox, trunk, custom container contents.
+
+## Common actions
+
+- **Click item** → see every player holding it.
+- **Click player** → open their [Player Profile](player-profile).
+- **Edit quantity**, requires `inventories.edit`. Logged to audit.
+
+## Notes
+
+Reads from `ox_inventory` if installed, otherwise from the framework's native inventory tables. Custom containers (like the backpack item) are handled too, they appear as separate stashes prefixed with their owner's license.

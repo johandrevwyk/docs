@@ -1,0 +1,87 @@
+---
+title: "Install the Lua resource in FiveM"
+description: "The dashboard talks to your game server through a small Lua resource called nexora-dashboard. Without it, the dashboard shows zero live data."
+---
+
+The dashboard talks to your game server through a small Lua resource called `nexora-dashboard`. Without it, the dashboard shows zero live data.
+
+## What you need
+
+- The `nexora-dashboard` folder (ships inside the release ZIP, located at `/home/fivem/nexora-dashboard/` after you extract).
+- Your `FIVEM_API_KEY` (printed at the end of the install script, also in `/home/fivem/.env`).
+- Your dashboard URL (e.g. `https://dash.yourdomain.com`).
+- Access to your FiveM server's `resources/` folder.
+
+## Step 1: Copy the folder
+
+Drop the `nexora-dashboard` folder into your server's resources directory. Path depends on your host:
+
+| Setup | Path |
+|-------|------|
+| txAdmin (QBox/QBCore) | `txData/<deployment>/resources/[standalone]/nexora-dashboard` |
+| Pterodactyl (most game panels) | `/server-data/resources/nexora-dashboard` |
+| Custom | wherever your other resources live |
+
+Keep the folder name **exactly** `nexora-dashboard`, `fxmanifest.lua` references it.
+
+## Step 2: Edit `config.lua`
+
+Open `nexora-dashboard/config.lua` and set:
+
+```lua
+Config.DashboardURL = 'https://dash.yourdomain.com'  -- no trailing slash
+Config.ApiKey       = 'paste your FIVEM_API_KEY here'
+```
+
+Save the file.
+
+## Step 3: Add to `server.cfg`
+
+Add this line near your other `ensure` lines:
+
+```
+ensure nexora-dashboard
+```
+
+If you use ESX or older QBCore that loads resources in a specific order, put it **after** your framework (`qbx_core`, `qb-core`, `es_extended`) so it can detect which framework is running.
+
+## Step 4: Restart
+
+From the FiveM live console:
+
+```
+restart nexora-dashboard
+```
+
+Or restart the whole server. You should see lines like:
+
+```
+[nexora-dashboard] starting...
+[nexora-dashboard] framework detected: qbx
+[nexora-dashboard] connected to dashboard
+```
+
+## Step 5: Verify in the dashboard
+
+Open the dashboard → **Online Players** page. Within 5 seconds you should see your online players.
+
+If the page is empty:
+
+- Check the FiveM console for `[nexora-dashboard]` errors.
+- Make sure `Config.ApiKey` exactly matches `FIVEM_API_KEY` in `/home/fivem/.env`.
+- Make sure your dashboard URL is reachable from the FiveM server (not blocked by firewall).
+
+## Optional: server.cfg convars
+
+If your installer printed convars like this, paste them into `server.cfg` instead of editing `config.lua`:
+
+```
+set DASHBOARD_URL "https://dash.yourdomain.com"
+set DASHBOARD_API_KEY "your-api-key-here"
+```
+
+The resource reads convars first, then falls back to `config.lua`.
+
+## Updating the resource later
+
+When a new version of the dashboard ships, download the new release ZIP from your Tebex purchase page, extract it, and copy the fresh `nexora-dashboard/` folder over the old one on your game server. Then `restart nexora-dashboard` in the FiveM console.

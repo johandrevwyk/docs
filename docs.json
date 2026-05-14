@@ -1,12 +1,12 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "almond",
-  "name": "Product Guide",
-  "description": "Step-by-step guides for every product—platform setup, analytics, and integrations in one place.",
+  "theme": "mint",
+  "name": "HB Scripts Docs",
+  "description": "Documentation for Nexora Dashboard, Citizen's Journey, and ADS System.",
   "colors": {
-    "primary": "#166E3F",
-    "light": "#26BD6C",
-    "dark": "#166E3F"
+    "primary": "#7C3AED",
+    "light": "#A78BFA",
+    "dark": "#5B21B6"
   },
   "favicon": "/favicon.ico",
   "icons": {
@@ -16,62 +16,113 @@
     "eyebrows": "breadcrumbs"
   },
   "contextual": {
-    "options": ["copy", "view", "assistant", "mcp", "add-mcp"]
+    "options": ["copy", "view", "assistant"]
   },
   "navigation": {
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Home",
-          "icon": "house",
-          "href": "/"
-        },
-        {
-          "anchor": "Changelog",
-          "icon": "scroll-text",
-          "href": "https://www.mintlify.com/docs/changelog"
-        },
-        {
-          "anchor": "Help",
-          "icon": "life-buoy",
-          "href": "https://www.mintlify.com/docs/contact-support"
-        }
-      ]
-    },
-    "directory": "card",
-    "groups": [
+    "tabs": [
       {
-        "group": "Platform",
-        "icon": "layers",
-        "expanded": true,
-        "pages": [
-          "platform/quickstart",
-          "platform/key-concepts",
-          "platform/configuration/settings",
-          "platform/configuration/user-management",
-          "platform/administration/roles-permissions"
+        "tab": "Nexora Dashboard",
+        "groups": [
+          {
+            "group": "Welcome",
+            "icon": "house",
+            "pages": ["index"]
+          },
+          {
+            "group": "Getting Started",
+            "icon": "rocket",
+            "pages": [
+              "getting-started/requirements",
+              "getting-started/auto-install",
+              "getting-started/manual-nginx",
+              "getting-started/first-login",
+              "getting-started/env-vars"
+            ]
+          },
+          {
+            "group": "Lua Resource",
+            "icon": "code",
+            "pages": ["lua-resource/install"]
+          },
+          {
+            "group": "Dashboard Pages",
+            "icon": "layout-dashboard",
+            "pages": [
+              "pages/dashboard",
+              "pages/online-players",
+              "pages/live-map",
+              "pages/players",
+              "pages/player-profile",
+              "pages/inventories",
+              "pages/bans",
+              "pages/vehicles",
+              "pages/economy",
+              "pages/properties",
+              "pages/audit-logs",
+              "pages/settings",
+              "pages/resources",
+              "pages/queue",
+              "pages/whitelist",
+              "pages/kill-log",
+              "pages/chat",
+              "pages/phone",
+              "pages/entities",
+              "pages/console",
+              "pages/storage",
+              "pages/discord-bot",
+              "pages/users",
+              "pages/roles",
+              "pages/account"
+            ]
+          },
+          {
+            "group": "Help",
+            "icon": "life-buoy",
+            "pages": ["troubleshooting"]
+          }
         ]
       },
       {
-        "group": "Analytics",
-        "icon": "chart-bar",
-        "expanded": true,
-        "pages": [
-          "analytics/quickstart",
-          "analytics/connect-data",
-          "analytics/dashboards/create-dashboard",
-          "analytics/reports/scheduled-reports"
+        "tab": "Citizen's Journey",
+        "groups": [
+          {
+            "group": "Citizen's Journey",
+            "icon": "trophy",
+            "pages": [
+              "citizens-journey/summary",
+              "citizens-journey/installation",
+              "citizens-journey/configs",
+              "citizens-journey/integration",
+              "citizens-journey/player-ui",
+              "citizens-journey/client-events",
+              "citizens-journey/server-exports"
+            ]
+          }
         ]
       },
       {
-        "group": "Integrations",
-        "icon": "plug",
-        "expanded": true,
-        "pages": [
-          "integrations/quickstart",
-          "integrations/authentication",
-          "integrations/connectors/crm",
-          "integrations/webhooks/configure"
+        "tab": "ADS System",
+        "groups": [
+          {
+            "group": "ADS System",
+            "icon": "megaphone",
+            "pages": [
+              "ads-system/summary",
+              "ads-system/installation",
+              "ads-system/configs",
+              "ads-system/preview"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Marketing",
+        "groups": [
+          {
+            "group": "Listings",
+            "icon": "tag",
+            "pages": ["tebex", "cfx-forums"]
+          }
         ]
       }
     ]
@@ -81,17 +132,18 @@
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [],
+    "links": [
+      { "label": "Discord", "href": "https://discord.gg/" }
+    ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Buy on Tebex",
+      "href": "https://tebex.io/"
     }
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/yourcompany",
-      "linkedin": "https://linkedin.com/company/yourcompany"
+      "github": "https://github.com/johandrevwyk"
     }
   }
 }

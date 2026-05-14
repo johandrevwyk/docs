@@ -1,0 +1,56 @@
+---
+title: "Requirements"
+description: "Before you install, make sure you have all of this."
+---
+
+Before you install, make sure you have all of this.
+
+## A Linux server (VPS or dedicated)
+
+- **OS:** Ubuntu 22.04 / 24.04, Debian 12, or any modern Linux with `apt` or `dnf`.
+- **RAM:** 1 GB minimum. 2 GB recommended.
+- **Disk:** 5 GB free.
+- **Root access** (you must be able to `sudo`).
+- **A public IP address.**
+
+The dashboard does **not** have to run on the same machine as your FiveM game server. It only needs to reach the game server's MySQL database over the network.
+
+## A domain name
+
+You need a domain (or subdomain) pointed at your dashboard server's IP.
+
+Example: `dash.mygtaserver.com → 203.0.113.10`
+
+Add an **A record** at your domain registrar. Wait 5–10 minutes for DNS to update before installing, the SSL certificate step will fail otherwise.
+
+## Your FiveM MySQL database
+
+The dashboard reads your existing FiveM database (QBox, QBCore or ESX). You need:
+
+- DB host (e.g. `127.0.0.1` if on same machine, or a public host).
+- DB port (usually `3306`).
+- DB username.
+- DB password.
+- DB name.
+
+If the database is on a different machine, make sure your dashboard server can reach it (firewall, MySQL `bind-address`, user `GRANT` with the dashboard server's IP).
+
+## Optional: Discord application
+
+Want admins to log in with Discord? Create an app at <https://discord.com/developers/applications>:
+
+1. New Application → name it.
+2. OAuth2 tab → copy **Client ID** and **Client Secret**.
+3. Add redirect URI: `https://yourdomain.com/api/auth/discord/callback`.
+
+Skip this if you only want password login.
+
+## Network ports
+
+The setup script will open these on the dashboard server:
+
+- **80**, HTTP (redirects to HTTPS).
+- **443**, HTTPS (the dashboard).
+- **3000**, internal, only used between nginx and Node. Do **not** open to public.
+
+That's it. Next: [Auto install](auto-install).

@@ -1,0 +1,27 @@
+---
+title: "Users"
+---
+
+Route: `/users`
+Sidebar group: Access
+Permission: `users.view` (create / edit / delete need matching `users.*`)
+
+## What it does
+
+Manage who can log into the dashboard. Add staff, assign roles, remove ex-staff.
+
+## What you see
+
+- **User row** with username, assigned role(s), Discord link, last login, status (active / disabled).
+- **Search**, by username.
+
+## Common actions
+
+- **Add user**, username + password + role. Requires `users.create`.
+- **Edit user**, change role, reset password, link Discord / Steam. Requires `users.edit`.
+- **Disable user**, block login without deleting. Requires `users.edit`.
+- **Delete user**, gone for good. Requires `users.delete`.
+
+## Notes
+
+You can't delete the last user with super-admin permissions, the dashboard refuses, to stop you locking yourself out. Demote yourself first, or promote someone else.

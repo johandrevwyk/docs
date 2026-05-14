@@ -1,0 +1,26 @@
+---
+title: "Entities"
+---
+
+Route: `/entities`
+Sidebar group: System
+Permission: `entities.view`
+
+## What it does
+
+Tracks how many active vehicles, peds and objects are on your server right now. Useful for spotting entity bloat (too many spawned cars or props) before performance tanks.
+
+## What you see
+
+- **Live counts**, vehicles, peds, objects, total.
+- **Sparklines**, last hour of each count.
+- **Snapshots panel**, point-in-time history with timestamps.
+
+## Common actions
+
+- **Click sparkline** → expanded chart with longer range.
+- **Force snapshot**, record current counts immediately.
+
+## Notes
+
+Entity caps in FiveM are around 4,000 vehicles and 12,000 total entities (varies by server). The page colors counts yellow / red as you approach those caps.

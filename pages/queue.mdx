@@ -1,0 +1,25 @@
+---
+title: "Queue"
+---
+
+Route: `/queue`
+Sidebar group: Players
+Permission: `queue.view` (manage needs `queue.manage`)
+
+## What it does
+
+When your server is full, players wait in a queue. This page shows that queue live, who's in line, how long they've waited, and lets you bump or boot anyone.
+
+## What you see
+
+- **Queue entry** with name, identifiers, position, time in queue, priority level.
+- **Priority colors**, VIP / staff jump ahead, plain players wait.
+
+## Common actions
+
+- **Kick from queue**, drop someone out of line. Requires `queue.manage`.
+- **Adjust priority**, change their queue tier. Requires `queue.manage`.
+
+## Notes
+
+The queue is run by the Lua resource (`queue.lua`). Priority levels are configured in `nexora-dashboard/config.lua` on the game server side.

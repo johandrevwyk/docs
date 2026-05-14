@@ -1,0 +1,27 @@
+---
+title: "Account"
+---
+
+Route: `/account`
+Sidebar group: (your avatar, bottom-left sidebar)
+Permission: any logged-in user
+
+## What it does
+
+Your personal settings. Change your password, link/unlink identities.
+
+## What you see
+
+- **Profile**, username, role, last login.
+- **Password**, change form (current + new + confirm).
+- **Linked identities**, Discord, Steam, FiveM (Cfx.re). Link to allow OAuth login with that account.
+
+## Common actions
+
+- **Change password**, old password required, new must be 8+ chars.
+- **Link Discord**, opens Discord OAuth flow.
+- **Unlink**, removes that identity from your account.
+
+## Notes
+
+If you forget your password and can't reach the OAuth flow, you'll need shell access to reset it via the database. See [Troubleshooting](../troubleshooting#i-forgot-my-admin-password).

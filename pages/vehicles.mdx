@@ -1,0 +1,29 @@
+---
+title: "Vehicles"
+---
+
+Route: `/vehicles`
+Sidebar group: World
+Permission: `vehicles.view` (edit needs `vehicles.edit`)
+
+## What it does
+
+Every vehicle in your database, parked, stored, impounded, active. Filter by state and jump to the owner.
+
+## What you see
+
+- **Vehicle row** with plate, model, owner, state (out / stored / impounded), garage, fuel %, body / engine damage %.
+- **Filters**, state, garage, damage threshold.
+- **Search**, by plate, model or owner license.
+
+## Common actions
+
+- **Click row** → vehicle detail panel.
+- **Open owner** → [Player Profile](player-profile).
+- **Force store**, return a vehicle to its garage. Requires `vehicles.edit`.
+- **Repair / refuel**, restore body, engine, fuel. Requires `vehicles.edit`.
+- **Delete vehicle**, removes from DB. Requires `vehicles.edit`. Irreversible.
+
+## Notes
+
+If you use `jg-advancedgarages`, vehicle state comes from its tables (`in_garage`, `impound`, `garage_id`), not the framework's default `state` column.

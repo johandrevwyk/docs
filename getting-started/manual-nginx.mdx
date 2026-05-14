@@ -1,0 +1,172 @@
+---
+title: "Manual install with nginx"
+description: "Skip this page if you used the [auto install](auto-install.md). Use this if you want full control or already have nginx configured."
+---
+
+Skip this page if you used the [auto install](auto-install). Use this if you want full control or already have nginx configured.
+
+## 1. Install dependencies
+
+Debian / Ubuntu:
+
+```bash
+sudo apt update
+sudo apt install -y curl unzip nginx certbot python3-certbot-nginx
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -
+sudo apt install -y nodejs
+```
+
+Verify:
+
+```bash
+node --version    # should print v20.x or higher
+nginx -v
+certbot --version
+```
+
+## 2. Extract the release ZIP
+
+Upload `nexora-dashboard-vX.X.X.zip` to the server, then:
+
+```bash
+cd /home
+sudo unzip /path/to/nexora-dashboard-v*.zip
+sudo mv nexora-dashboard-v* fivem
+cd fivem
+sudo npm ci --omit=dev
+```
+
+The release already contains `dist/server/` and `dist/client/`. You do not need to build anything.
+
+## 3. Create `.env`
+
+Copy the example and edit it:
+
+```bash
+sudo cp .env.example .env
+sudo nano .env
+```
+
+See [Environment variables](env-vars) for what every field means. At minimum fill in `JWT_SECRET`, `FIVEM_API_KEY`, and all `DB_*` values.
+
+Generate strong secrets:
+
+```bash
+openssl rand -hex 32
+```
+
+Lock down permissions:
+
+```bash
+sudo chmod 600 .env
+```
+
+## 4. nginx config
+
+Create `/etc/nginx/sites-available/nexora-dashboard`:
+
+```nginx
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+server {
+    listen 80;
+    server_name dash.yourdomain.com;
+
+    client_max_body_size 5g;
+
+    location /nui-ws {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+        proxy_set_header Host $host;
+        proxy_read_timeout 86400;
+        proxy_send_timeout 86400;
+    }
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 86400;
+        proxy_send_timeout 86400;
+    }
+}
+```
+
+Replace `dash.yourdomain.com` with your actual domain.
+
+Enable + reload:
+
+```bash
+sudo ln -s /etc/nginx/sites-available/nexora-dashboard /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+## 5. Get SSL certificate
+
+```bash
+sudo certbot --nginx -d dash.yourdomain.com
+```
+
+Certbot auto-edits your nginx config to add HTTPS and HTTP to HTTPS redirect. Renewal runs automatically (test with `certbot renew --dry-run`).
+
+## 6. Create systemd service
+
+Create `/etc/systemd/system/nexora-dashboard.service`:
+
+```ini
+[Unit]
+Description=Nexora Dashboard
+After=network.target mysql.service mariadb.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/fivem
+ExecStart=/usr/bin/node dist/server/index.js
+Restart=on-failure
+RestartSec=5
+EnvironmentFile=/home/fivem/.env
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=nexora-dashboard
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable + start:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now nexora-dashboard
+sudo systemctl status nexora-dashboard
+```
+
+Follow logs:
+
+```bash
+journalctl -u nexora-dashboard -f
+```
+
+## 7. Verify
+
+Open `https://dash.yourdomain.com` in your browser. You should see the onboarding screen. Continue at [First login](first-login).
+
+## Common gotchas
+
+- **Port 3000 already in use**: change `PORT` in `.env` and update `proxy_pass` in nginx.
+- **502 Bad Gateway**: the Node service is not running. Run `systemctl status nexora-dashboard` and read the log.
+- **SSL fails**: your domain DNS is not pointing at this server yet. Wait and retry.
+- **WebSocket disconnects**: make sure the `/nui-ws` block above is present in your nginx config.

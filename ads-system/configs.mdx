@@ -1,0 +1,51 @@
+---
+title: "Configs"
+description: "Config.Framework      = 'auto'        -- auto | qbcore | qbox"
+---
+
+### 🛠️ Configuration Highlights
+
+```lua
+Config.Framework      = 'auto'        -- auto | qbcore | qbox
+Config.Command        = 'ads'         -- /ads
+Config.PlayerCooldown = 120           -- seconds between ads
+Config.DisplayTime    = 11            -- banner duration (seconds)
+Config.BannerPosition = 'top-center'  -- 6 positions supported
+Config.CurrencySymbol = 'R'
+
+Config.Billing.enabled  = true
+Config.Billing.cashFirst = true
+
+Config.WordFilter.enabled = true
+Config.WordFilter.action  = 'block'   -- block | censor
+
+Config.Discord.enabled  = true
+Config.Discord.webhook  = 'https://discord.com/api/webhooks/…'
+
+Config.SaveAds.enabled      = true
+Config.SaveAds.historyLimit = 50
+
+Config.CustomAds.enabled       = true
+Config.CustomAds.cost          = 500
+Config.CustomAds.titleMaxLen   = 60
+Config.CustomAds.messageMaxLen = 400
+```
+
+#### Ad type definition (`shared/adtypes.lua`)
+
+```lua
+{
+    id          = 'police',
+    label       = 'POLICE 🚔',
+    icon        = '👮',
+    subject     = 'LSPD Announcement',
+    description = 'Official law enforcement broadcast',
+    cost        = 0,
+    allowedJobs = { 'police', 'lspd', 'sheriff' },
+    adminOnly   = false,
+    textColour  = '#93c5fd',
+    soundId     = 'police',
+}
+```
+
+Per-type `logoUrl`, `bgUrl`, `textColour`, `soundId` all optional and override player defaults.
