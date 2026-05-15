@@ -31,6 +31,5 @@ That's it. Players open the phone, find **Diamond Online**, and start playing.
 
 ### Notes
 
-* `config_server.lua` is the only Lua file you should edit. There is no `config_client.lua` — everything the client needs is fetched from the server at runtime.
-* If you run both LB Phone and YSeries (unusual), set `Config.PhoneType` explicitly. Auto-detect picks LB Phone first.
+* `config_server.lua` is the only file you can edit. Every other Lua file is escrow-protected. Everything the client needs is fetched from the server at runtime, so there is no client config to touch.
 * Round counters resume from the database on resource restart, so `round_id` stays unique forever.
