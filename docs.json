@@ -21,64 +21,74 @@
   "navigation": {
     "tabs": [
       {
+        "tab": "Home",
+        "groups": [
+          {
+            "group": "HB Scripts",
+            "icon": "house",
+            "pages": ["index"]
+          }
+        ]
+      },
+      {
         "tab": "Nexora Dashboard",
         "groups": [
           {
             "group": "Welcome",
             "icon": "house",
-            "pages": ["index"]
+            "pages": ["nexora-dashboard/overview"]
           },
           {
             "group": "Getting Started",
             "icon": "rocket",
             "pages": [
-              "getting-started/requirements",
-              "getting-started/auto-install",
-              "getting-started/manual-nginx",
-              "getting-started/first-login",
-              "getting-started/env-vars"
+              "nexora-dashboard/getting-started/requirements",
+              "nexora-dashboard/getting-started/auto-install",
+              "nexora-dashboard/getting-started/manual-nginx",
+              "nexora-dashboard/getting-started/first-login",
+              "nexora-dashboard/getting-started/env-vars"
             ]
           },
           {
             "group": "Lua Resource",
             "icon": "code",
-            "pages": ["lua-resource/install"]
+            "pages": ["nexora-dashboard/lua-resource/install"]
           },
           {
             "group": "Dashboard Pages",
             "icon": "layout-dashboard",
             "pages": [
-              "pages/dashboard",
-              "pages/online-players",
-              "pages/live-map",
-              "pages/players",
-              "pages/player-profile",
-              "pages/inventories",
-              "pages/bans",
-              "pages/vehicles",
-              "pages/economy",
-              "pages/properties",
-              "pages/audit-logs",
-              "pages/settings",
-              "pages/resources",
-              "pages/queue",
-              "pages/whitelist",
-              "pages/kill-log",
-              "pages/chat",
-              "pages/phone",
-              "pages/entities",
-              "pages/console",
-              "pages/storage",
-              "pages/discord-bot",
-              "pages/users",
-              "pages/roles",
-              "pages/account"
+              "nexora-dashboard/pages/dashboard",
+              "nexora-dashboard/pages/online-players",
+              "nexora-dashboard/pages/live-map",
+              "nexora-dashboard/pages/players",
+              "nexora-dashboard/pages/player-profile",
+              "nexora-dashboard/pages/inventories",
+              "nexora-dashboard/pages/bans",
+              "nexora-dashboard/pages/vehicles",
+              "nexora-dashboard/pages/economy",
+              "nexora-dashboard/pages/properties",
+              "nexora-dashboard/pages/audit-logs",
+              "nexora-dashboard/pages/settings",
+              "nexora-dashboard/pages/resources",
+              "nexora-dashboard/pages/queue",
+              "nexora-dashboard/pages/whitelist",
+              "nexora-dashboard/pages/kill-log",
+              "nexora-dashboard/pages/chat",
+              "nexora-dashboard/pages/phone",
+              "nexora-dashboard/pages/entities",
+              "nexora-dashboard/pages/console",
+              "nexora-dashboard/pages/storage",
+              "nexora-dashboard/pages/discord-bot",
+              "nexora-dashboard/pages/users",
+              "nexora-dashboard/pages/roles",
+              "nexora-dashboard/pages/account"
             ]
           },
           {
             "group": "Help",
             "icon": "life-buoy",
-            "pages": ["troubleshooting"]
+            "pages": ["nexora-dashboard/troubleshooting"]
           }
         ]
       },
