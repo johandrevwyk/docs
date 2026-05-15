@@ -1,0 +1,127 @@
+---
+title: "Configs"
+description: "All config lives in config_server.lua. Nothing ships to the client."
+---
+
+### Why server-only?
+
+Bet limits, payout ratios, slot weights, and role thresholds live in `config_server.lua` and never get shipped to the client. The client fetches the subset it needs (UI presets, min/max for hint text) via `lib.callback` on demand. A Lua dumper attached to a player can only ever see the network-visible payload, never the source of truth.
+
+That means **don't** put anything sensitive in client-side files. Don't add a `config_client.lua`. If the UI needs a new value, add a server callback for it.
+
+### Phone & framework
+
+```lua
+Config.PhoneType  = "auto"        -- "auto" | "lb-phone" | "yseries"
+Config.AppKey     = "casino-app"  -- must be unique across phone apps
+Config.DefaultApp = false         -- yseries only: install app by default
+
+Config.Framework   = "auto"  -- "auto" | "qbx" | "qb"
+Config.BankAccount = "bank"  -- "bank" | "savings" | "cash"
+
+Config.ShowLogs = true
+```
+
+### Wallet
+
+```lua
+Config.Wallet = {
+    MinDeposit      = 100,
+    MaxDeposit      = 100000,
+    MinWithdraw     = 100,
+    MaxWithdraw     = 100000,
+    DepositPresets  = { 500, 1000, 5000, 10000 },
+    WithdrawPresets = { 500, 1000, 5000, 10000 },
+}
+```
+
+Per-call caps. Rate-limit (1.5s) handles velocity. Anything outside the bounds is rejected server-side regardless of what the UI sends.
+
+### flyUS
+
+```lua
+Config.FlyUS = {
+    MinBet                = 50,
+    MaxBet                = 50000,
+    BetPresets            = { 50, 200, 500, 1000, 5000, 10000 },
+    ShowProvablyFair      = true,
+    HouseEdge             = 0.99,   -- 1% edge. Lower = more player-friendly.
+    TickInterval          = 200,    -- ms between multiplier updates
+    BettingPhaseDuration  = 8000,
+    CrashDisplayDuration  = 4000,
+    HistoryLength         = 50,
+}
+```
+
+### Blackjack
+
+```lua
+Config.Blackjack = {
+    MinBet                     = 50,
+    MaxBet                     = 25000,
+    BetPresets                 = { 50, 100, 250, 500, 1000, 5000 },
+    NumDecks                   = 6,
+    BlackjackPayoutNumerator   = 3,  -- 3/2 = 1.5x payout (standard)
+    BlackjackPayoutDenominator = 2,
+}
+```
+
+### Slots
+
+```lua
+Config.Slots = {
+    MinBet     = 25,
+    MaxBet     = 10000,
+    BetPresets = { 25, 100, 250, 500, 1000, 2500 },
+    Symbols = {
+        { id = "cherries", weight = 22 },
+        { id = "lemon",    weight = 20 },
+        -- ...
+        { id = "slots",    weight = 2  },  -- jackpot
+    },
+    Payouts3 = {
+        cherries = 3,  lemon = 4,  orange = 5,
+        watermelon = 7, plum = 10, grapes = 15,
+        bell = 20, bar = 35, slots = 100,
+    },
+    Payout2oak = 0.5,
+}
+```
+
+Symbol `id` must match the filename inside `html/sloticons/` (without `.png`). Higher `weight` = more frequent. Set `Payout2oak = 0` to disable pair payouts entirely.
+
+### Roulette
+
+```lua
+Config.Roulette = {
+    MinBet                = 50,
+    MaxBet                = 25000,
+    BetPresets            = { 50, 200, 500, 1000, 5000 },
+    RedBlackPayout        = 2,   -- 1:1 (total return = bet × 2)
+    GreenPayout           = 36,  -- 35:1 straight-up
+    BettingPhaseDuration  = 15000,
+    SpinDuration          = 4500,
+    ResultDisplayDuration = 4500,
+    HistoryLength         = 20,
+}
+```
+
+Single-zero European wheel. Round is shared across all subscribers — everyone sees the same outcome at the same time.
+
+### Profile roles
+
+Awarded based on lifetime winnings across all games. Order entries low → high.
+
+```lua
+Config.Roles = {
+    { id = "newcomer",   label = "Newcomer",    threshold = 0,        icon = "fa-solid fa-star" },
+    { id = "amateur",    label = "Amateur",     threshold = 10000,    icon = "fa-solid fa-dice" },
+    { id = "regular",    label = "Regular",     threshold = 50000,    icon = "fa-solid fa-coins" },
+    { id = "highroller", label = "High Roller", threshold = 200000,   icon = "fa-solid fa-gem" },
+    { id = "elite",      label = "Elite",       threshold = 750000,   icon = "fa-solid fa-shield-halved" },
+    { id = "vip",        label = "VIP",         threshold = 2000000,  icon = "fa-solid fa-crown" },
+    { id = "whale",      label = "Casino Whale",threshold = 10000000, icon = "fa-solid fa-trophy" },
+}
+```
+
+Icons are Font Awesome class names. The UI renders them directly.

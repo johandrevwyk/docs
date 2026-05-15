@@ -1,0 +1,26 @@
+---
+title: "Summary"
+description: "Online casino app for LB Phone & YSeries. Provably fair flyUS crash, blackjack, slots, and shared-round roulette, all server-authoritative."
+---
+
+## Diamond Online — In-Phone Casino for QB-Core / QBox
+
+**One resource. Four games. Server-authoritative wallet and outcomes. Provably fair seeds. Works on LB Phone and YSeries out of the box.**
+
+Diamond Online lives inside the player's phone. Open the app, deposit cash from your bank into casino credits, and play any of the four built-in games. Every outcome is decided on the server using a commit-reveal seed scheme so players can verify results after each round.
+
+***
+
+### Headline features
+
+* **flyUS crash** — Multiplier climbs until it crashes. Cash out before it does. Shared round, all subscribers see the same multiplier in real time.
+* **Blackjack** — Standard 6-deck shoe, dealer hits soft 17, 3:2 blackjack payout. Game logic runs in UI, bet/settle decided server-side with anti-replay protection.
+* **Slots** — Weighted reels, 3-of-a-kind and pair payouts. Symbol weights and payout tables stay server-side (never shipped to client).
+* **Roulette** — Single-zero European, shared round, red/black/green colour bets. HMAC-derived pocket from server seed.
+* **Server-authoritative credits** — Wallet, bets, deductions, and payouts run through `oxmysql`. Client never decides money.
+* **Provably fair** — `SHA256(serverSeed)` published before each round, server seed revealed after. Players verify outcomes themselves.
+* **Phone-agnostic** — Auto-detects LB Phone or YSeries. Force either via config.
+* **Framework-agnostic** — Auto-detects QB-Core or qbx_core.
+* **Anti-extractor by design** — Config (bet limits, payouts, slot weights, role thresholds) stays on the server. Client fetches values via `lib.callback` on demand so Lua dumpers can't read odds.
+* **Rate-limited everything** — Every callback per-player, per-action throttled to kill injector spam.
+* **Lifetime stats + history** — Last 100 bets across all four games, total won, total wagered, role progression on the profile tab.

@@ -1,0 +1,36 @@
+---
+title: "Installation"
+description: "Drop the resource, run the SQL, ensure it after your phone resource."
+---
+
+### Requirements
+
+* QB-Core or qbx_core
+* `oxmysql`
+* `ox_lib`
+* One of: `lb-phone` or `yseries`
+
+### Install
+
+1. Drop `hb_diamondonline` into `resources/`.
+2. Import `sql/casino.sql` into your FiveM database. Creates these tables:
+   * `casino_credits`
+   * `casino_flyus_rounds`, `casino_flyus_bets`
+   * `casino_blackjack_hands`
+   * `casino_slots_hands`
+   * `casino_roulette_rounds`, `casino_roulette_spins`
+3. Add to `server.cfg` **after** your phone resource and `oxmysql` / `ox_lib`:
+
+   ```cfg
+   ensure hb_diamondonline
+   ```
+4. Edit `config_server.lua` if you want to change bet limits, payouts, or phone selection. See [Configs](/hb-diamondonline/configs).
+5. Restart the server. The phone app registers itself with LB Phone or YSeries automatically.
+
+That's it. Players open the phone, find **Diamond Online**, and start playing.
+
+### Notes
+
+* `config_server.lua` is the only Lua file you should edit. There is no `config_client.lua` — everything the client needs is fetched from the server at runtime.
+* If you run both LB Phone and YSeries (unusual), set `Config.PhoneType` explicitly. Auto-detect picks LB Phone first.
+* Round counters resume from the database on resource restart, so `round_id` stays unique forever.

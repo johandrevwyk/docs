@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "HB Scripts Docs",
-  "description": "Documentation for Nexora Dashboard, Citizen's Journey, and ADS System.",
+  "description": "Documentation for Nexora Dashboard, Citizen's Journey, ADS System, and Diamond Online.",
   "colors": {
     "primary": "#7C3AED",
     "light": "#A78BFA",
@@ -121,6 +121,20 @@
               "ads-system/installation",
               "ads-system/configs",
               "ads-system/preview"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Diamond Online",
+        "groups": [
+          {
+            "group": "Diamond Online",
+            "icon": "gem",
+            "pages": [
+              "hb-diamondonline/summary",
+              "hb-diamondonline/installation",
+              "hb-diamondonline/configs"
             ]
           }
         ]
