@@ -8,7 +8,7 @@ Permission: `phone.view`
 
 ## What it does
 
-Read-only inspection of an in-game phone resource. Two providers are supported and selectable in [Settings → Framework](settings): **lb-phone** and **yseries**. Pick `None` to disable the page entirely.
+Read-only inspection of an in-game phone resource. Two providers are supported and selectable in [Settings → Framework](/nexora-dashboard/pages/settings): **lb-phone** and **yseries**. Pick `None` to disable the page entirely.
 
 Detection is SQL-only. The dashboard probes the provider's tables (e.g. `phone_phones` for lb-phone, `yphone_devices` for yseries). The phone resource does not need to be "running" or expose any export; if the tables exist, the page works.
 
@@ -25,7 +25,7 @@ This page is read-only. Use **Check again** on the empty state to re-probe after
 
 ## Switching providers
 
-Change `Phone Script` under [Settings → Framework](settings) and save. The cache refreshes within a minute, or click **Check again** to force it. Selecting a provider whose tables don't exist shows a hint instead of a 500.
+Change `Phone Script` under [Settings → Framework](/nexora-dashboard/pages/settings) and save. The cache refreshes within a minute, or click **Check again** to force it. Selecting a provider whose tables don't exist shows a hint instead of a 500.
 
 ## Notes
 

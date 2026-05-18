@@ -1,9 +1,9 @@
 ---
 title: "Manual install with nginx"
-description: "Skip this page if you used the [auto install](auto-install.md). Use this if you want full control or already have nginx configured."
+description: "Skip this page if you used the [auto install](/nexora-dashboard/getting-started/auto-install). Use this if you want full control or already have nginx configured."
 ---
 
-Skip this page if you used the [auto install](auto-install). Use this if you want full control or already have nginx configured.
+Skip this page if you used the [auto install](/nexora-dashboard/getting-started/auto-install). Use this if you want full control or already have nginx configured.
 
 ## 1. Install dependencies
 
@@ -47,7 +47,7 @@ sudo cp .env.example .env
 sudo nano .env
 ```
 
-See [Environment variables](env-vars) for what every field means. At minimum fill in `JWT_SECRET`, `FIVEM_API_KEY`, and all `DB_*` values.
+See [Environment variables](/nexora-dashboard/getting-started/env-vars) for what every field means. At minimum fill in `JWT_SECRET`, `FIVEM_API_KEY`, and all `DB_*` values.
 
 Generate strong secrets:
 
@@ -162,7 +162,7 @@ journalctl -u nexora-dashboard -f
 
 ## 7. Verify
 
-Open `https://dash.yourdomain.com` in your browser. You should see the onboarding screen. Continue at [First login](first-login).
+Open `https://dash.yourdomain.com` in your browser. You should see the onboarding screen. Continue at [First login](/nexora-dashboard/getting-started/first-login).
 
 ## Common gotchas
 

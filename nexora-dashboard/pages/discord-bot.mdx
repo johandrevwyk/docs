@@ -8,7 +8,7 @@ Permission: `discord.view` (manage needs `discord.manage`)
 
 ## What it does
 
-The Discord bot is **a whitelist sync helper**, nothing else. It polls the configured Discord guild on a schedule, finds every member who holds one of the selected roles, and writes them to `dash_whitelist`. There is no Discord-role → dashboard-permission mapping; admin access is granted in [Users](users) / [Roles](roles), not Discord.
+The Discord bot is **a whitelist sync helper**, nothing else. It polls the configured Discord guild on a schedule, finds every member who holds one of the selected roles, and writes them to `dash_whitelist`. There is no Discord-role → dashboard-permission mapping; admin access is granted in [Users](/nexora-dashboard/pages/users) / [Roles](/nexora-dashboard/pages/roles), not Discord.
 
 Optional extras the same connection enables:
 
@@ -38,4 +38,4 @@ Optional extras the same connection enables:
 ## Notes
 
 - Setting `Remove whitelist entries when role removed` makes the sync authoritative. Members losing the role get pulled out of `dash_whitelist` on the next tick. Leave off if you want Discord to add but never revoke.
-- The bot does **not** grant or revoke dashboard logins, ban anyone, or read chat messages. Permissions are still managed entirely from [Roles](roles).
+- The bot does **not** grant or revoke dashboard logins, ban anyone, or read chat messages. Permissions are still managed entirely from [Roles](/nexora-dashboard/pages/roles).
